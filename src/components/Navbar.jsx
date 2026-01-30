@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { FaBriefcase, FaSearch, FaBars, FaTimes } from "react-icons/fa";
-
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
@@ -36,33 +35,89 @@ const Navbar = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white/30 shadow-lg"
+          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white/20 shadow-lg"
         >
-          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-2 md:px-5 py-3 flex items-center justify-between">
 
             {/* Logo */}
-            <Link to="/" className="text-xl md:text-2xl lg:text-3xl font-extrabold">
-              <span className="text-white">
-                DevFreelance
+            <Link to="/" className="text-xl flex flex-row gap-2 items-center md:text-2xl lg:text-3xl font-extrabold">
+              <img className="w-5 md:w-8" src="https://i.ibb.co.com/9Hbzq1gc/freelance.png" alt="" />
+              <span className="bg-linear-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                WorkHub
               </span>
             </Link>
 
-            {/* Search Bar (Desktop) */}
-            <div className="hidden md:flex items-center bg-white rounded-full shadow px-3 py-1 w-72">
-              <FaSearch className="text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search jobs..."
-                className="ml-2 w-full outline-none bg-transparent"
-              />
-            </div>
-
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-6">
-              <NavLink className="nav-link" to="/">Home</NavLink>
-              <NavLink className="nav-link" to="/about">About</NavLink>
-              <NavLink className="nav-link" to="/jobs">All Jobs</NavLink>
-              <NavLink className="nav-link" to="/experience">Experience</NavLink>
+            <div className="hidden md:flex items-center gap-3">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `relative px-4 py-1 font-medium transition-colors duration-300
+     after:absolute after:left-0 after:-bottom-1 after:h-0.5
+     after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+     after:transition-all after:duration-300
+     hover:text-white hover:after:w-full
+     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+                }
+              >
+                Home
+              </NavLink>
+
+              <NavLink
+                to="/browse-jobs"
+                className={({ isActive }) =>
+                  `relative px-4 py-1 font-medium transition-colors duration-300
+     after:absolute after:left-0 after:-bottom-1 after:h-0.5
+     after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+     after:transition-all after:duration-300
+     hover:text-white hover:after:w-full
+     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+                }
+              >
+                Browse Jobs
+              </NavLink>
+
+              <NavLink
+                to="/how-it-works"
+                className={({ isActive }) =>
+                  `relative px-4 py-1 font-medium transition-colors duration-300
+     after:absolute after:left-0 after:-bottom-1 after:h-0.5
+     after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+     after:transition-all after:duration-300
+     hover:text-white hover:after:w-full
+     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+                }
+              >
+                How It Works
+              </NavLink>
+
+              <NavLink
+                to="/categories"
+                className={({ isActive }) =>
+                  `relative px-4 py-1 font-medium transition-colors duration-300
+     after:absolute after:left-0 after:-bottom-1 after:h-0.5
+     after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+     after:transition-all after:duration-300
+     hover:text-white hover:after:w-full
+     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+                }
+              >
+                Categories
+              </NavLink>
+
+              <NavLink
+                to="/pricing"
+                className={({ isActive }) =>
+                  `relative px-4 py-1 font-medium transition-colors duration-300
+                after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+                after:transition-all after:duration-300
+               hover:text-white hover:after:w-full
+               ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+                }
+              >
+                Pricing
+              </NavLink>
 
               {/* Job Dashboard Icon (only when logged in) */}
               {user && (

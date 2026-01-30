@@ -1,6 +1,2 @@
 @import "tailwindcss";
 
-/* index.css */
-.nav-link {
-  @apply text-gray-300 hover:text-white transition font-medium;
-}

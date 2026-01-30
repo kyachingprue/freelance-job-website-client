@@ -1,14 +1,27 @@
-import React from 'react';
-import Banner from '../components/home/Banner';
-import TopCompanies from '../components/home/TopCompanies';
-import FreelanceCard from '../components/home/FreelanceCard';
+import React, { lazy, Suspense } from "react";
+import Banner from "../components/home/Banner";
+import FreelanceCard from "../components/home/FreelanceCard";
+
+const TopCompanies = lazy(() =>
+  import("../components/home/TopCompanies")
+);
 
 const Home = () => {
   return (
     <div>
       <Banner />
-      <TopCompanies />
-      <FreelanceCard/>
+
+      <Suspense
+        fallback={
+          <div className="text-center py-20 text-white">
+            Loading Top Companies...
+          </div>
+        }
+      >
+        <TopCompanies />
+      </Suspense>
+
+      <FreelanceCard />
     </div>
   );
 };
