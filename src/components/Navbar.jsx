@@ -35,7 +35,7 @@ const Navbar = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white/20 shadow-lg"
+          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white shadow-lg"
         >
           <div className="max-w-7xl mx-auto px-2 md:px-5 py-3 flex items-center justify-between">
 
@@ -56,8 +56,8 @@ const Navbar = () => {
      after:absolute after:left-0 after:-bottom-1 after:h-0.5
      after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
      after:transition-all after:duration-300
-     hover:text-white hover:after:w-full
-     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+     hover:text-gray-800 hover:after:w-full
+     ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 Home
@@ -70,8 +70,8 @@ const Navbar = () => {
      after:absolute after:left-0 after:-bottom-1 after:h-0.5
      after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
      after:transition-all after:duration-300
-     hover:text-white hover:after:w-full
-     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+     hover:text-gray-800 hover:after:w-full
+     ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 Browse Jobs
@@ -84,8 +84,8 @@ const Navbar = () => {
      after:absolute after:left-0 after:-bottom-1 after:h-0.5
      after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
      after:transition-all after:duration-300
-     hover:text-white hover:after:w-full
-     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+     hover:text-gray-800 hover:after:w-full
+     ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 How It Works
@@ -98,8 +98,8 @@ const Navbar = () => {
      after:absolute after:left-0 after:-bottom-1 after:h-0.5
      after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
      after:transition-all after:duration-300
-     hover:text-white hover:after:w-full
-     ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+     hover:text-gray-800 hover:after:w-full
+     ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 Categories
@@ -112,8 +112,8 @@ const Navbar = () => {
                 after:absolute after:left-0 after:-bottom-1 after:h-0.5
                 after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
                 after:transition-all after:duration-300
-               hover:text-white hover:after:w-full
-               ${isActive ? "text-indigo-300 after:w-full" : "text-gray-300"}`
+               hover:text-gray-800 hover:after:w-full
+               ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 Pricing
