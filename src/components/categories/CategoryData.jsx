@@ -18,21 +18,21 @@ const categories = [
 
 const CategoryData = () => {
   return (
-    <section className="bg-gray-900 py-20 md:py-32 px-4">
+    <section className="bg-sky-100 py-20 md:py-32 px-4">
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="text-4xl py-2 font-extrabold text-center mb-3
-        bg-linear-to-r from-indigo-400 to-pink-500
+        bg-linear-to-r from-indigo-500 to-pink-600
         bg-clip-text text-transparent"
       >
         Browse by Categories
       </motion.h2>
 
       {/* Description */}
-      <p className="text-center text-gray-400 max-w-2xl mx-auto mb-12">
+      <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
         Explore work opportunities in various fields and find projects that match your skills.
       </p>
 
@@ -43,7 +43,7 @@ const CategoryData = () => {
             key={index}
             whileHover={{ y: -8, scale: 1.03 }}
             transition={{ type: "spring", stiffness: 200 }}
-            className="bg-white/5 backdrop-blur-lg border hover:border-2 border-white/10
+            className="bg-white/60 backdrop-blur-lg border hover:border-2 border-black/20
             rounded-2xl overflow-hidden cursor-pointer
             hover:border-indigo-400/40 hover:shadow-xl"
           >
@@ -59,10 +59,10 @@ const CategoryData = () => {
 
             {/* Content */}
             <div className="p-5 text-center">
-              <h3 className="text-lg font-bold text-white mb-1">
+              <h3 className="text-lg font-bold text-gray-800 mb-1">
                 {cat.title}
               </h3>
-              <p className="text-sm text-indigo-400">
+              <p className="text-sm text-indigo-600">
                 {cat.jobs}+ Jobs Available
               </p>
             </div>

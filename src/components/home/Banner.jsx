@@ -48,7 +48,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-linear-to-br from-black via-gray-900 to-black text-white">
+    <section className="relative min-h-screen overflow-hidden bg-sky-200 text-black">
 
       {/* 3D Glow Background */}
       <div className="absolute inset-0">
@@ -66,17 +66,17 @@ const Banner = () => {
         >
           <motion.span
             whileHover={{ scale: 1.05 }}
-            className="inline-block mb-6 px-4 py-2 rounded-full bg-white/10 backdrop-blur border border-white/10 text-sm"
+            className="inline-block mb-6 text-gray-700 font-semibold px-4 py-2 rounded-full bg-white/40 backdrop-blur border border-white/10 text-sm"
           >
             🚀 The Future of Freelancing
           </motion.span>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-            Hire Top <span className="text-indigo-400">Freelancers</span> <br />
-            Or Get Hired <span className="text-pink-400">Faster</span>
+          <h1 className="text-4xl md:text-6xl text-blue-950 font-extrabold leading-tight">
+            Hire Top <span className="text-indigo-800">Freelancers</span> <br />
+            Or Get Hired <span className="text-pink-600">Faster</span>
           </h1>
 
-          <p className="mt-6 text-gray-400 max-w-xl">
+          <p className="mt-6 text-gray-600 max-w-xl">
             A next-generation freelance platform connecting talented professionals
             with global clients using smart matching and modern workflows.
           </p>
@@ -86,7 +86,7 @@ const Banner = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 flex items-center gap-2 shadow-lg shadow-indigo-600/30"
+              className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 flex items-center text-white gap-2 shadow-lg font-medium shadow-indigo-600/30"
             >
               Hire Talent <ArrowRight size={18} />
             </motion.button>
@@ -94,7 +94,7 @@ const Banner = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-xl border border-white/20 bg-white/5 backdrop-blur hover:bg-white/10"
+              className="px-6 py-3 rounded-xl border border-white font-medium bg-white/5 backdrop-blur hover:bg-white/10"
             >
               Find Work
             </motion.button>
@@ -103,24 +103,24 @@ const Banner = () => {
           {/* Stats */}
           <div className="mt-14 flex gap-10">
             <div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-3xl font-bold text-fuchsia-700">
                 {counts.freelancers}K+
               </h3>
-              <p className="text-sm text-gray-400">Freelancers</p>
+              <p className="text-sm text-cyan-700">Freelancers</p>
             </div>
 
             <div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-3xl font-bold text-emerald-700">
                 {counts.clients}K+
               </h3>
-              <p className="text-sm text-gray-400">Clients</p>
+              <p className="text-sm text-cyan-700">Clients</p>
             </div>
 
             <div>
-              <h3 className="text-3xl font-bold text-white">
+              <h3 className="text-3xl font-bold text-lime-700">
                 {counts.success}%
               </h3>
-              <p className="text-sm text-gray-400">Success Rate</p>
+              <p className="text-sm text-cyan-700">Success Rate</p>
             </div>
           </div>
         </motion.div>
@@ -131,12 +131,12 @@ const Banner = () => {
           {/* Card 1 */}
           <motion.div
             {...floatAnimation}
-            className="absolute top-0 left-10 w-64 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/10 shadow-2xl"
+            className="absolute top-0 left-10 w-64 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/70 shadow-2xl"
             whileHover={{ rotateY: 15, rotateX: -10 }}
           >
-            <Briefcase className="text-indigo-400 mb-3" />
+            <Briefcase className="text-indigo-700 mb-3" />
             <h4 className="font-semibold">Post a Job</h4>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Reach thousands of skilled freelancers instantly.
             </p>
           </motion.div>
@@ -145,12 +145,12 @@ const Banner = () => {
           <motion.div
             {...floatAnimation}
             transition={{ ...floatAnimation.transition, delay: 1 }}
-            className="absolute top-40 right-0 w-72 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/10 shadow-2xl"
+            className="absolute top-40 right-0 w-72 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/70 shadow-2xl"
             whileHover={{ rotateY: -15, rotateX: 10 }}
           >
-            <Users className="text-pink-400 mb-3" />
+            <Users className="text-pink-600 mb-3" />
             <h4 className="font-semibold">Hire Smart</h4>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               AI-powered matching for perfect collaboration.
             </p>
           </motion.div>
@@ -159,11 +159,11 @@ const Banner = () => {
           <motion.div
             {...floatAnimation}
             transition={{ ...floatAnimation.transition, delay: 2 }}
-            className="absolute bottom-0 right-15 w-60 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/10 shadow-2xl"
+            className="absolute bottom-0 right-15 w-60 p-5 rounded-2xl bg-white/10 backdrop-blur border border-white/70 shadow-2xl"
             whileHover={{ rotateY: 10, rotateX: 10 }}
           >
             <h4 className="font-semibold">Secure Payments</h4>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Protected escrow & fast global payouts.
             </p>
           </motion.div>

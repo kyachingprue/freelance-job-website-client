@@ -71,14 +71,14 @@ const clientSteps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-linear-to-br from-gray-900 via-indigo-950 to-black text-white min-h-screen py-28 px-6 ">
+    <section className="bg-linear-to-br from-sky-200 via-indigo-200 to-pink-300 text-white min-h-screen py-28 px-6 ">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl md:text-5xl font-extrabold text-center mb-6"
+          className="text-4xl md:text-5xl text-sky-950 font-extrabold text-center mb-6"
         >
           How It Works
         </motion.h1>
@@ -86,9 +86,9 @@ const HowItWorks = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2 }}
-          className="text-gray-300 text-center mb-16 max-w-3xl mx-auto"
+          className="text-gray-600 text-center mb-16 max-w-3xl mx-auto"
         >
-          Learn how freelancers and clients use our platform to succeed.
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate odit quas iure! Fugit assumenda, aspernatur, quasi praesentium dignissimos suscipit officiis accusamus placeat molestiae, quae illo culpa sint excepturi non nesciunt?
         </motion.p>
 
         {/* Freelancer Section */}
@@ -97,7 +97,7 @@ const HowItWorks = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          <h2 className="text-3xl font-bold mb-8 text-indigo-400 text-center">
+          <h2 className="text-3xl font-bold mb-8 text-indigo-700 text-center">
             For Freelancers
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -106,11 +106,11 @@ const HowItWorks = () => {
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 text-center shadow-2xl"
+                className="bg-white/60 backdrop-blur-lg border border-white/20 rounded-3xl p-6 text-center shadow-2xl"
               >
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{item.step}</h3>
-                <ul className="text-gray-300 list-disc list-inside space-y-1">
+                <h3 className="text-xl text-gray-800 font-bold mb-3">{item.step}</h3>
+                <ul className="text-gray-600 list-disc list-inside space-y-1">
                   {item.points.map((point, i) => (
                     <li key={i}>{point}</li>
                   ))}
@@ -127,7 +127,7 @@ const HowItWorks = () => {
           transition={{ duration: 1.5 }}
           className="mt-20"
         >
-          <h2 className="text-3xl font-bold mb-8 text-pink-400 text-center">
+          <h2 className="text-3xl font-bold mb-8 text-pink-600 text-center">
             For Clients
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -136,11 +136,11 @@ const HowItWorks = () => {
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-6 text-center shadow-2xl"
+                className="bg-white/60 backdrop-blur-lg border border-white/20 rounded-3xl p-6 text-center shadow-2xl"
               >
                 <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{item.step}</h3>
-                <ul className="text-gray-300 list-disc list-inside space-y-1">
+                <h3 className="text-xl text-gray-800 font-bold mb-3">{item.step}</h3>
+                <ul className="text-gray-600 list-disc list-inside space-y-1">
                   {item.points.map((point, i) => (
                     <li key={i}>{point}</li>
                   ))}

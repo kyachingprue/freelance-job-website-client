@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown, Info } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AccordionItem = ({ title, content }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,9 +63,9 @@ const FreelanceCard = () => {
   ];
 
   return (
-    <section className="bg-gray-800 min-h-screen flex items-center justify-center px-4 md:px-20 py-16">
+    <section className="bg-blue-200 min-h-screen flex items-center justify-center px-4 md:px-20 py-16">
       <motion.div
-        className="flex flex-col md:flex-row bg-gray-700/50 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden max-w-6xl w-full"
+        className="flex flex-col md:flex-row bg-blue-950 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden max-w-6xl w-full"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -99,12 +100,14 @@ const FreelanceCard = () => {
             ))}
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="mt-6 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-full font-semibold w-max shadow-lg"
-          >
-            View Details
-          </motion.button>
+          <Link to="/browse-jobs">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              className="mt-6 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-full font-semibold w-max shadow-lg"
+            >
+              View Details
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
     </section>

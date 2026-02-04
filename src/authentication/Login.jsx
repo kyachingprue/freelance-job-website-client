@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
@@ -21,10 +21,13 @@ const Login = () => {
     try {
       await loginUser(email, password); // your useAuth login function
       toast.success("Login successful!");
-      navigate("/"); // redirect to home page
+      navigate("/"); 
     } catch (error) {
-      console.error(error);
-      toast.error(error.message || "Login failed!");
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Invalid email or password");
+      } else {
+        toast.error("Login failed. Try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -100,10 +103,14 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-indigo-500 hover:bg-indigo-600 transition-colors text-white font-semibold rounded-lg shadow-lg"
+            className={`w-full py-3 font-semibold rounded-lg shadow-lg transition-colors ${loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-indigo-500 hover:bg-indigo-600 text-white"
+              }`}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+
           <p className=" text-gray-300 text-center">Don't have an Account ? Please <Link to="/register" className="hover:text-blue-400 hover:underline">register</Link></p>
         </form>
       </div>

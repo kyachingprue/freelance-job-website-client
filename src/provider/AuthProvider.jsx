@@ -3,14 +3,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  sendEmailVerification,
   sendPasswordResetEmail,
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
 import AuthContext from "../context/AuthContext";
 import auth from "../firebase/firebase.config";
-import toast from "react-hot-toast";
 
 
 const AuthProvider = ({ children }) => {
@@ -29,21 +27,7 @@ const AuthProvider = ({ children }) => {
 
   const loginUser = async (email, password) => {
     setLoading(true);
-    const result = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    // Optional strict check
-    if (!result.user.emailVerified) {
-      await signOut(auth);
-      setLoading(false);
-      toast.error("Please verify your email before login.");
-    }
-
-    setLoading(false);
-    return result;
+    return signInWithEmailAndPassword(auth, email, password)
   };
 
   const profileUpdate = (profile) => {
@@ -57,11 +41,6 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const resendVerificationEmail = () => {
-    if (auth.currentUser) {
-      return sendEmailVerification(auth.currentUser);
-    }
-  };
 
   const resetPassword = (email) => {
     setLoading(true);
@@ -86,12 +65,11 @@ const AuthProvider = ({ children }) => {
     profileUpdate,
     logOut,
     resetPassword,
-    resendVerificationEmail,
   };
 
   return (
     <AuthContext.Provider value={authInfo}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -38,13 +38,14 @@ const Pricing = () => {
   const [billing, setBilling] = useState("monthly");
 
   return (
-    <section className="bg-linear-to-br from-gray-900 via-indigo-950 to-black text-white min-h-screen py-28 px-6">
+    <section className="bg-linear-to-br from-sky-200 via-indigo-200 to-white text-white min-h-screen py-28 px-6">
       <div className="max-w-7xl mx-auto text-center">
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+        <h1 className="text-4xl md:text-5xl bg-linear-to-r from-indigo-600 to-pink-600
+        bg-clip-text text-transparent font-extrabold mb-4">
           Pricing Plans
         </h1>
-        <p className="text-gray-300 mb-10 max-w-2xl mx-auto">
+        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
           Choose the plan that suits you best. Flexible monthly or yearly subscriptions for freelancers and clients.
         </p>
 
@@ -55,7 +56,7 @@ const Pricing = () => {
             className={`px-6 py-2 rounded-l-full font-medium transition-all duration-300
       ${billing === "monthly"
                 ? "bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg"
-                : "bg-white/20 text-gray-300 hover:bg-white/30"
+                : "bg-white/20 text-gray-600 hover:bg-white/30"
               }`}
           >
             Monthly
@@ -66,7 +67,7 @@ const Pricing = () => {
             className={`px-6 py-2 rounded-r-full font-medium transition-all duration-300
       ${billing === "yearly"
                 ? "bg-linear-to-r from-indigo-500 to-pink-500 text-white shadow-lg"
-                : "bg-white/20 text-gray-300 hover:bg-white/30"
+                : "bg-white/20 text-gray-600 hover:bg-white/30"
               }`}
           >
             Yearly
@@ -90,7 +91,7 @@ const Pricing = () => {
                 ease: "easeInOut",
               }}
               className="relative rounded-xl py-8 text-center overflow-hidden
-      bg-linear-to-br from-white/10 via-white/5 to-white/10
+      bg-linear-to-br from-blue-950 via-pink-800 to-cyan-900
       backdrop-blur-xl border border-white/20
       shadow-[0_20px_60px_rgba(0,0,0,0.6)]
       hover:shadow-[0_30px_90px_rgba(99,102,241,0.6)]
@@ -106,7 +107,7 @@ const Pricing = () => {
               {/* Content */}
               <div className="relative z-10">
                 <h2 className="text-2xl font-extrabold mb-3
-        bg-linear-to-r from-indigo-400 to-pink-500
+        bg-linear-to-r from-indigo-200 to-pink-200
         bg-clip-text text-transparent">
                   {plan.name}
                 </h2>
@@ -143,12 +144,12 @@ const Pricing = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="mt-16 bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 max-w-3xl mx-auto shadow-2xl"
+          className="mt-16 bg-white/60 backdrop-blur-lg border border-white/20 rounded-3xl p-8 max-w-3xl mx-auto shadow-2xl"
         >
-          <h3 className="text-2xl font-bold mb-4 text-indigo-400">
+          <h3 className="text-2xl font-bold mb-4 text-indigo-800">
             Commission Based Pricing
           </h3>
-          <ul className="text-gray-300 list-disc list-inside space-y-2">
+          <ul className="text-gray-600 list-disc list-inside space-y-2">
             <li>Platform cut: 5% - 20%</li>
             <li>Client pays → Platform → Freelancer</li>
             <li>Automatically deducted securely</li>

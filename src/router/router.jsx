@@ -7,11 +7,14 @@ import Pricing from "../pages/Pricing";
 import Login from "../authentication/Login";
 import Register from "../authentication/Register";
 import Categories from "../pages/Categories";
+import ErrorPage from "../pages/ErrorPage";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
@@ -34,6 +37,10 @@ const router = createBrowserRouter([
         element: <Pricing/>
       }
     ]
+  },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout/>
   },
   {
     path: '/login',

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { FaBriefcase, FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
+import { Bell, LayoutDashboard, LogOut } from "lucide-react";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -123,9 +125,23 @@ const Navbar = () => {
               {user && (
                 <NavLink
                   to="/dashboard"
-                  className="text-xl text-indigo-600 hover:scale-110 transition"
+                  className="relative text-xl text-blue-800 md:ml-10 mr-2 hover:scale-110 transition"
                 >
-                  <FaBriefcase />
+                  <IoIosNotificationsOutline size={28} />
+
+                  {/* Notification Count */}
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                    5
+                  </span>
+                </NavLink>
+              )}
+
+              {user && (
+                <NavLink
+                  to="/dashboard"
+                  className="text-xl mr-4 text-indigo-600 hover:scale-110 transition"
+                >
+                  <LayoutDashboard size={27} color="blue" />
                 </NavLink>
               )}
 
@@ -154,16 +170,18 @@ const Navbar = () => {
                       className="absolute right-0 mt-3 w-44 bg-white shadow-xl rounded-xl p-3"
                     >
                       <Link
-                        to="/profile"
+                        to="/dashboard"
                         className="block px-3 py-2 rounded hover:bg-gray-100"
                       >
-                        Profile
+                          <button className="flex items-center gap-2">
+                            <LayoutDashboard color="blue"/> Dashboard
+                          </button>
                       </Link>
                       <button
                         onClick={logOut}
-                        className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 text-red-500"
+                        className="w-full flex items-center gap-2 text-left px-3 py-2 rounded hover:bg-gray-100 text-red-500"
                       >
-                        Logout
+                          <LogOut /> Logout
                       </button>
                     </motion.div>
                   )}

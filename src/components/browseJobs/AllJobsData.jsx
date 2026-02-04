@@ -192,29 +192,29 @@ const AllJobsData = () => {
         </div>
       </div>
 
-      {/* ================= MAIN ================= */}
+      {/*  MAIN Part */}
       <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-        {/* ============ LEFT FILTER PANEL ============ */}
-        <div className="bg-white rounded-xl px-5 py-2 border border-gray-200 shadow-xl">
+        {/* LEFT FILTER PANEL */}
+        <div className="bg-white rounded-xl px-2 md:px-4 py-2 border border-gray-200 shadow-xl">
 
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold text-xl flex items-center gap-1">
-              <SlidersHorizontal size={16} /> Advanced Filter
-            </h3>
+            <div className="font-semibold text-2xl flex items-center gap-1">
+              <SlidersHorizontal size={20} /> Advanced Filter
+            </div>
             <button
               onClick={resetFilters}
-              className="text-sm text-blue-600 flex items-center gap-1"
+              className="text-sm pt-2 text-blue-600 flex items-center gap-1"
             >
               <RotateCcw size={14} /> Reset
             </button>
           </div>
 
-          {/* ===== CATEGORY FILTER ===== */}
-          <label className="text-md md:text-lg font-medium block mb-2">Categories</label>
-          <div className="space-y-1 h-80 overflow-y-auto mb-4">
+          {/*  CATEGORY FILTER  */}
+          <label className="text-md md:text-xl font-medium block mb-3">Categories</label>
+          <div className="space-y-1 h-80 md:h-105 overflow-y-auto mb-4">
             {[...new Set(jobs.map(job => job.category))].map(cat => (
-              <label key={cat} className="flex items-center gap-2 text-sm">
+              <label key={cat} className="flex items-center gap-2 text-sm md:text-base md:py-0.5">
                 <input
                   type="radio"
                   name="category"
@@ -226,8 +226,8 @@ const AllJobsData = () => {
             ))}
           </div>
 
-          {/* ===== SALARY RANGE ===== */}
-          <label className="text-md md:text-lg font-medium">Salary Range</label>
+          {/* SALARY RANGE */}
+          <label className="text-md md:text-xl font-medium">Salary Range</label>
           <input
             type="range"
             min="0"
@@ -237,14 +237,14 @@ const AllJobsData = () => {
             className="w-full"
           />
           <div className="flex justify-between items-center px-2">
-            <p className="text-xs text-slate-500 mb-4">$0k</p>
-            <p className="text-xs text-slate-500 mb-4">${salary}k</p>
+            <p className="text-sm text-slate-500 mb-4">$0k</p>
+            <p className="text-sm text-slate-500 mb-4">${salary}k</p>
          </div>
 
-          {/* ===== EXPERIENCE LEVEL ===== */}
-          <label className="block mt-2 text-md md:text-lg font-medium">Experience Level</label>
+          {/* EXPERIENCE LEVEL */}
+          <label className="block my-2 text-md md:text-xl font-medium">Experience Level</label>
           {["Internship", "Entry", "Intermediate", "Expert"].map(level => (
-            <label key={level} className="flex items-center gap-2 py-0.5 text-sm">
+            <label key={level} className="flex items-center gap-2 py-0.5 text-sm md:text-base md:py-0.5">
               <input
                 type="radio"
                 name="exp"
@@ -254,10 +254,10 @@ const AllJobsData = () => {
             </label>
           ))}
 
-          {/* ===== WORK MODE ===== */}
-          <label className="block mt-4 text-md md:text-lg font-medium">Work Mode</label>
+          {/* WORK MODE */}
+          <label className="block my-4 text-md md:text-xl font-medium">Work Mode</label>
           {["Remote", "On-site", "Hybrid"].map(mode => (
-            <label key={mode} className="flex items-center gap-2 py-0.5 text-sm">
+            <label key={mode} className="flex items-center gap-2 py-0.5 text-sm md:text-base md:py-0.5">
               <input
                 type="radio"
                 name="mode"
@@ -267,10 +267,10 @@ const AllJobsData = () => {
             </label>
           ))}
 
-          {/* ===== JOB POSTED DATE ===== */}
-          <label className="block mt-4 text-md md:text-lg font-medium">Job Posted</label>
+          {/* JOB POSTED DATE */}
+          <label className="block my-4 text-md md:text-xl font-medium">Job Posted</label>
           {[1, 7, 30].map(day => (
-            <label key={day} className="flex items-center gap-2 py-0.5 text-sm">
+            <label key={day} className="flex items-center gap-2 py-0.5 text-sm md:text-base md:py-0.5">
               <input
                 type="radio"
                 name="posted"
@@ -282,12 +282,12 @@ const AllJobsData = () => {
 
         </div>
 
-        {/* ============ RIGHT JOBS AREA ============ */}
+        {/* ---- RIGHT JOBS AREA ---- */}
         <div className="lg:col-span-3">
 
           {/* Top Info */}
           <div className="flex justify-between items-center mb-6">
-            <p className="text-sm md:text-md text-slate-600 font-medium">
+            <p className="text-sm md:text-lg text-slate-600 font-medium">
               Showing {start + 1} – {Math.min(start + JOBS_PER_PAGE, filteredJobs.length)} of {filteredJobs.length} jobs
             </p>
 
