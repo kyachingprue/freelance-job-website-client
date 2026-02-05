@@ -42,7 +42,7 @@ const Pricing = () => {
       <div className="max-w-7xl mx-auto text-center">
         {/* Title */}
         <h1 className="text-4xl md:text-5xl bg-linear-to-r from-indigo-600 to-pink-600
-        bg-clip-text text-transparent font-extrabold mb-4">
+        bg-clip-text text-transparent font-extrabold py-4">
           Pricing Plans
         </h1>
         <p className="text-gray-600 mb-10 max-w-2xl mx-auto">

@@ -167,7 +167,7 @@ const Navbar = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="absolute right-0 mt-3 w-44 bg-white shadow-xl rounded-xl p-3"
+                      className="absolute right-0 mt-3 w-44 bg-white shadow-xl rounded-lg p-3"
                     >
                       <Link
                         to="/dashboard"
@@ -192,7 +192,7 @@ const Navbar = () => {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenu(!mobileMenu)}
-                className="text-2xl text-white"
+                className="text-2xl text-gray-700"
               >
                 {mobileMenu ? <FaTimes /> : <FaBars />}
               </button>
