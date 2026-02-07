@@ -9,12 +9,16 @@ import {
   SlidersHorizontal
 } from "lucide-react";
 import JobsCard from "./JobsCard";
+import { useSearchParams } from "react-router-dom";
 
 const JOBS_PER_PAGE = 9;
 
 const AllJobsData = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+
+  const categoryData = searchParams.get("category");
 
   /* Filters */
   const [search, setSearch] = useState("");
@@ -37,6 +41,13 @@ const AllJobsData = () => {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (categoryData) {
+      setCategory(categoryData);
+      setCurrentPage(1);
+    }
+  }, [categoryData]);
 
 
   const filteredJobs = useMemo(() => {

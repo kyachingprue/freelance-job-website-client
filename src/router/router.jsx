@@ -9,6 +9,7 @@ import Register from "../authentication/Register";
 import Categories from "../pages/Categories";
 import ErrorPage from "../pages/ErrorPage";
 import DashboardLayout from "../layouts/DashboardLayout";
+import JobsDetail from "../components/browseJobs/JobsDetail";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: 'browse-jobs',
         element: <BrowseJobs/>
+      },
+      {
+        path: 'job-details/:id',
+        element: <JobsDetail/>
       },
       {
         path: 'how-it-works',

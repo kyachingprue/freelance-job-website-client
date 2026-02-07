@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   { title: "Web Development", jobs: 1240, image: "https://i.ibb.co.com/F1rRXcC/360-F-214879686-R3-HFJlk6-WLr1kcdvy6-Q9rt-NASKN0-BZBS.jpg" },
@@ -10,16 +11,21 @@ const categories = [
   { title: "Video & Animation", jobs: 540, image: "https://i.ibb.co.com/mVkVQGkB/pngtree-a-modern-workspace-featuring-dual-monitors-displaying-video-editing-software-and-image-17131.jpg" },
   { title: "Virtual Assistance", jobs: 610, image: "https://i.ibb.co.com/TxLw2PMT/feature-image-July19-2-960x540.png" },
   { title: "Data Science & Analytics", jobs: 460, image: "https://i.ibb.co.com/S7dpF8wR/2021-11-Data-Science-Vs-Data-Analytics.jpg" },
-  { title: "DSA (Data Structure & Algorithm)", jobs: 390, image: "https://i.ibb.co.com/nZZB3qn/DSA-MSA-Technosoft.png" },
+  { title: "DSA", jobs: 390, image: "https://i.ibb.co.com/nZZB3qn/DSA-MSA-Technosoft.png" },
   { title: "SEO & SEM", jobs: 580, image: "https://i.ibb.co.com/9HGRBNWC/seo-vs-sem.jpg" },
   { title: "Business & Consulting", jobs: 440, image: "https://i.ibb.co.com/JT4cjTn/Business-Growth-Consultant-details-mobile.jpg" },
   { title: "Computer Science", jobs: 720, image: "https://i.ibb.co.com/7Nz76nD2/360-F-1686616242-Vohj1m-CN1-Q7qq4w-Hj3-UIl-Vym6a-Dman-Pf.jpg" },
 ];
 
 const CategoryData = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    navigate(`/browse-jobs?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <section className="bg-sky-100 py-20 md:py-32 px-4">
-      {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -31,33 +37,29 @@ const CategoryData = () => {
         Browse by Categories
       </motion.h2>
 
-      {/* Description */}
       <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
         Explore work opportunities in various fields and find projects that match your skills.
       </p>
 
-      {/* Cards */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {categories.map((cat, index) => (
           <motion.div
             key={index}
             whileHover={{ y: -8, scale: 1.03 }}
             transition={{ type: "spring", stiffness: 200 }}
-            className="bg-white/60 backdrop-blur-lg border hover:border-2 border-black/20
-            rounded-2xl overflow-hidden cursor-pointer
+            onClick={() => handleCategoryClick(cat.title)}
+            className="bg-white/60 backdrop-blur-lg border border-gray-300 cursor-pointer
+            rounded-2xl overflow-hidden
             hover:border-indigo-400/40 hover:shadow-xl"
           >
-            {/* Image */}
             <div className="h-40 overflow-hidden">
               <img
                 src={cat.image}
                 alt={cat.title}
                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                loading="lazy"
               />
             </div>
 
-            {/* Content */}
             <div className="p-5 text-center">
               <h3 className="text-lg font-bold text-gray-800 mb-1">
                 {cat.title}

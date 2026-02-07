@@ -9,9 +9,11 @@ import {
   Bookmark,
   Box
 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const JobsCard = ({ job }) => {
   const {
+    _id,
     title,
     jobType,
     postedAt,
@@ -25,6 +27,8 @@ const JobsCard = ({ job }) => {
     category,
     position
   } = job;
+
+  const navigate = useNavigate();
 
   return (
     <motion.div
@@ -118,13 +122,15 @@ const JobsCard = ({ job }) => {
           </span>
         </div>
 
-        <motion.button
-          whileHover={{ x: 5 }}
-          className="flex items-center gap-1 text-sm font-medium text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100"
-        >
-          Apply Now
-          <ArrowRight size={16} />
-        </motion.button>
+        <Link to={`/job-details/${_id}`}>
+          <motion.button
+            whileHover={{ x: 5 }}
+            className="flex items-center gap-1 text-sm font-medium text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100"
+          >
+            Apply Now
+            <ArrowRight size={16} />
+          </motion.button>
+        </Link>
       </div>
     </motion.div>
   );

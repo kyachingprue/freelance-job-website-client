@@ -11,7 +11,7 @@ const images = [
 
 export default function NewsletterSubscribe() {
   return (
-    <section className="w-full min-h-screen py-20 bg-sky-50">
+    <section className="w-full min-h-screen py-24 bg-sky-50">
       <section className="relative py-24">
         {/* Background */}
         <div className="absolute inset-0 -skew-y-3 bg-linear-to-r from-[#0a2540] via-[#0b2f5b] to-[#0a2540]" />
