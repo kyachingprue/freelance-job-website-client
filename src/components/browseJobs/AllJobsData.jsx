@@ -10,17 +10,16 @@ import {
 } from "lucide-react";
 import JobsCard from "./JobsCard";
 import { useSearchParams } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../LoadingSpinner";
+import ErrorLoading from "../ErrorLoading";
 
 const JOBS_PER_PAGE = 9;
 
 const AllJobsData = () => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchParams] = useSearchParams();
-
   const categoryData = searchParams.get("category");
-
-  /* Filters */
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
@@ -28,19 +27,17 @@ const AllJobsData = () => {
   const [experience, setExperience] = useState("");
   const [workMode, setWorkMode] = useState("");
   const [salary, setSalary] = useState(200);
-
-  /* Sorting & Pagination */
+  const axiosPublic = useAxiosPublic();
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    fetch("/jobsData.json")
-      .then(res => res.json())
-      .then(data => {
-        setJobs(data);
-        setLoading(false);
-      });
-  }, []);
+  const { data: jobs = [], isLoading, isError, refetch } = useQuery({
+    queryKey: ['jobs'],
+    queryFn: async () => {
+      const res = await axiosPublic.get('/jobs')
+      return res.data;
+    }
+  })
 
   useEffect(() => {
     if (categoryData) {
@@ -129,6 +126,18 @@ const AllJobsData = () => {
     setSortBy("newest");
   };
 
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
+  if (isError) {
+    return (
+      <ErrorLoading
+        message="Unable to fetch job listings. Please check your connection."
+        onRetry={refetch}
+      />
+    );
+  }
 
   return (
     <div className="bg-sky-50 min-h-screen py-14">
@@ -313,7 +322,7 @@ const AllJobsData = () => {
             </select>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(6)].map((_, i) => (
                 <div

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "motion/react";
 import {
@@ -15,44 +14,34 @@ import {
   Tag,
   Sparkles,
 } from "lucide-react";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../LoadingSpinner";
 
 const JobsDetail = () => {
   const { id } = useParams();
-  const [job, setJob] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const axiosPulic = useAxiosPublic();
 
-  useEffect(() => {
-    fetch("/jobsData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const foundJob = data.find((item) => item._id === id);
-        setJob(foundJob || null);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [id]);
-
-  /* ===== LOADING ===== */
-  if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1 }}
-          className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full"
-        />
-      </div>
-    );
+  const { data: job, isLoading, isError, refetch } = useQuery({
+    queryKey: ['job', id],
+    queryFn: async () => {
+      const res = await axiosPulic.get(`/jobs/${id}`)
+      return res.data;
+    },
+    enabled: !!id,
+  })
+ 
+  if (isLoading) {
+    return <LoadingSpinner/>
   }
 
-  /* ===== NOT FOUND ===== */
-  if (!job) {
+  if (isError || !job)
     return (
-      <div className="min-h-screen flex justify-center items-center text-red-500 text-xl">
-        Job not found ❌
-      </div>
+      <ErrorLoading
+        message="Job details not found."
+        onRetry={refetch}
+      />
     );
-  }
 
   return (
     <motion.section

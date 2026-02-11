@@ -10,6 +10,29 @@ import Categories from "../pages/Categories";
 import ErrorPage from "../pages/ErrorPage";
 import DashboardLayout from "../layouts/DashboardLayout";
 import JobsDetail from "../components/browseJobs/JobsDetail";
+import FreelancerDashboard from "../dashboard/freelancer/FreelancerDashboard";
+import MyProposals from "../dashboard/freelancer/MyProposals";
+import ActiveJobs from "../dashboard/freelancer/ActiveJobs";
+import FreelancerReviews from "../dashboard/freelancer/FreelancerReviews";
+import FreelancerNotifications from "../dashboard/freelancer/FreelancerNotifications";
+import FreelancerEarnings from "../dashboard/freelancer/FreelancerEarnings";
+import FreelancerProfileSetting from "../dashboard/freelancer/FreelancerProfileSetting";
+import ClientDashboard from "../dashboard/client/ClientDashboard";
+import ClientPostAJobs from "../dashboard/client/ClientPostAJobs";
+import ClientMyJobs from "../dashboard/client/ClientMyJobs";
+import ClientProposals from "../dashboard/client/ClientProposals";
+import ClientHireFreelancer from "../dashboard/client/ClientHireFreelancer";
+import ClientPayments from "../dashboard/client/ClientPayments";
+import ClientProfile from "../dashboard/client/ClientProfile";
+import AdminDashboard from "../dashboard/admin/AdminDashboard";
+import AdminUsers from "../dashboard/admin/AdminUsers";
+import AdminJobs from "../dashboard/admin/AdminJobs";
+import AdminProposals from "../dashboard/admin/AdminProposals";
+import AdminPayments from "../dashboard/admin/AdminPayments";
+import AdminCategories from "../dashboard/admin/AdminCategories";
+import AdminReports from "../dashboard/admin/AdminReports";
+import AdminSettings from "../dashboard/admin/AdminSettings";
+import Notifications from "../pages/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -40,12 +63,109 @@ const router = createBrowserRouter([
       {
         path: 'pricing',
         element: <Pricing/>
+      },
+      {
+        path: 'notifications',
+        element: <Notifications/>
       }
     ]
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout/>
+    element: <DashboardLayout />,
+    children: [
+      // Freelancer Dashboard
+      {
+        path: 'freelancer-dashboard',
+        element:<FreelancerDashboard/>
+      },
+      {
+        path: 'freelancer-proposals',
+        element: <MyProposals/>
+      },
+      {
+        path: 'freelancer-active-jobs',
+        element: <ActiveJobs/>
+      },
+      {
+        path: 'freelancer-reviews',
+        element: <FreelancerReviews/>
+      },
+      {
+        path: "freelancer-notifications",
+        element: <FreelancerNotifications/>
+      },
+      {
+        path: 'freelancer-earnings',
+        element: <FreelancerEarnings/>
+      },
+      {
+        path: 'freelancer-profile-setting',
+        element: <FreelancerProfileSetting/>
+      },
+      // Client Dashboard
+      {
+        path: 'client-dashboard',
+        element: <ClientDashboard/>
+      },
+      {
+        path: 'client-post-jobs',
+        element: <ClientPostAJobs/>
+      },
+      {
+        path: 'client-my-jobs',
+        element: <ClientMyJobs/>
+      },
+      {
+        path: 'client-proposals',
+        element: <ClientProposals/>
+      },
+      {
+        path: 'client-hire-freelancer',
+        element: <ClientHireFreelancer/>
+      },
+      {
+        path: 'client-payments',
+        element: <ClientPayments/>
+      },
+      {
+        path: 'client-profile',
+        element: <ClientProfile/>
+      },
+      //Admin Dashboard
+      {
+        path: 'admin-dashboard',
+        element: <AdminDashboard/>
+      },
+      {
+        path: 'admin-users',
+        element: <AdminUsers/>
+      },
+      {
+        path: 'admin-jobs',
+        element: <AdminJobs/>
+      },
+      {
+        path: 'admin-proposals',
+        element: <AdminProposals/>
+      },
+      {
+        path: 'admin-payments',
+        element: <AdminPayments/>
+      },
+      {
+        path: 'admin-categories',
+        element: <AdminCategories/>
+      },
+      {
+        path: 'admin-reports',
+        element: <AdminReports/>
+      },
+      {
+        path: 'admin-settings',
+        element: <AdminSettings/>
+      }
+    ]
   },
   {
     path: '/login',

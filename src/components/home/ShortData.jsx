@@ -1,19 +1,33 @@
-import React, { useEffect, useState } from 'react';
 import JobsCard from '../browseJobs/JobsCard';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import LoadingSpinner from '../LoadingSpinner';
 
 const ShortData = () => {
-  const [jobsData, setJobsData] = useState([])
+  const axiosPublic = useAxiosPublic();
 
-  useEffect(() => {
-    fetch('/jobsData.json')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setJobsData(data)
-    })
-  }, [])
+  const { data: jobsData = [], isLoading, isError , refetch} = useQuery({
+    queryKey: ['jobsData'],
+    queryFn: async () => {
+      const res = await axiosPublic.get('/jobs')
+      return res.data;
+    }
+  })
+
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
+  if (isError) {
+    return (
+      <ErrorLoading
+        message="Unable to fetch job listings. Please check your connection."
+        onRetry={refetch}
+      />
+    );
+  }
 
   return (
     <div className='bg-sky-100 py-10'>

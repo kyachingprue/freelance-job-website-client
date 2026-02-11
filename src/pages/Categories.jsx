@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CategoryBanner from "../components/categories/CategoryBanner";
+import CategoryCardSection from "../components/categories/CategoryCardSection";
 
 const CategoryData = lazy(() =>
   import("../components/categories/CategoryData")
@@ -18,6 +19,7 @@ const Categories = () => {
       >
         <CategoryData />
       </Suspense>
+      <CategoryCardSection/>
     </div>
   );
 };

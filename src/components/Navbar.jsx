@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 import { Bell, LayoutDashboard, LogOut } from "lucide-react";
+import Notifications from "../pages/Notifications";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -12,6 +13,8 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [openMenu, setOpenMenu] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
 
   // Scroll hide/show logic
@@ -29,6 +32,19 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  const notifications = [
+    { message: "New job proposal received", time: "2 min ago" },
+    { message: "Your job has been approved", time: "1 hour ago" },
+  ];
+
+  const handleClick = () => {
+    if (window.innerWidth < 768) {
+      navigate("/notifications"); // Small device → Full page
+    } else {
+      setOpen(!open); // Large device → Dropdown
+    }
+  };
+
   return (
     <AnimatePresence>
       {showNavbar && (
@@ -37,7 +53,7 @@ const Navbar = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white shadow-lg"
+          className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-white/50 shadow-lg"
         >
           <div className="max-w-7xl mx-auto px-2 md:px-5 py-3 flex items-center justify-between">
 
@@ -121,19 +137,29 @@ const Navbar = () => {
                 Pricing
               </NavLink>
 
-              {/* Job Dashboard Icon (only when logged in) */}
               {user && (
-                <NavLink
-                  to="/dashboard"
-                  className="relative text-xl text-blue-800 md:ml-10 mr-2 hover:scale-110 transition"
-                >
-                  <IoIosNotificationsOutline size={28} />
+                <div className="relative md:ml-10 mr-2">
+                  <button
+                    onClick={handleClick}
+                    className="relative text-blue-800 hover:scale-110 transition"
+                  >
+                    <IoIosNotificationsOutline size={28} />
 
-                  {/* Notification Count */}
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                    5
-                  </span>
-                </NavLink>
+                    {/* Notification Count */}
+                    {notifications > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                        {notifications}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Dropdown (large device only) */}
+                  <Notifications
+                    isOpen={open}
+                    setIsOpen={setOpen}
+                    notifications={notifications}
+                  />
+                </div>
               )}
 
               {user && (
@@ -189,7 +215,39 @@ const Navbar = () => {
               )}
             </div>
             {/* Mobile Menu Button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center gap-3">
+              {user && (
+                <div className="relative md:ml-10 mt-2 mr-2">
+                  <button
+                    onClick={handleClick}
+                    className="relative text-blue-800 hover:scale-110 transition"
+                  >
+                    <IoIosNotificationsOutline size={32} />
+
+                    {/* Notification Count */}
+                    {notifications > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                        {notifications}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Dropdown (large device only) */}
+                  <Notifications
+                    isOpen={open}
+                    setIsOpen={setOpen}
+                    notifications={notifications}
+                  />
+                </div>
+              )}
+
+              <img
+                src={user?.photoURL || "https://i.ibb.co/ZYW3VTp/user.png"}
+                alt="user"
+                className="w-8 h-8 rounded-full cursor-pointer border-2 border-indigo-500"
+                onClick={() => setOpenMenu(!openMenu)}
+              />
+
               <button
                 onClick={() => setMobileMenu(!mobileMenu)}
                 className="text-2xl text-gray-700"
