@@ -6,9 +6,11 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import Notifications from "../pages/Notifications";
+import useRole from "../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const { role } = useRole();
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [openMenu, setOpenMenu] = useState(false);
@@ -164,7 +166,7 @@ const Navbar = () => {
 
               {user && (
                 <NavLink
-                  to="/dashboard"
+                  to={`/dashboard/${role}-dashboard`}
                   className="text-xl mr-4 text-indigo-600 hover:scale-110 transition"
                 >
                   <LayoutDashboard size={27} color="blue" />

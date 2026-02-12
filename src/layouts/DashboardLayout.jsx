@@ -150,26 +150,14 @@ export default function DashboardLayout() {
         <div className="flex-1 flex flex-col">
 
           {/* Topbar */}
-          <div className="flex items-center justify-between bg-white shadow-2xl dark:bg-gray-800 p-4">
+          <div className="block md:hidden bg-white p-4">
 
             {/* Mobile Toggle */}
             <button
               className="md:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              <Menu />
-            </button>
-
-            <h2 className="font-semibold text-lg dark:text-white">
-              Welcome to {role} Dashboard
-            </h2>
-
-            {/* Theme Toggle */}
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
-            >
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+              <Menu size={25}/>
             </button>
           </div>
 

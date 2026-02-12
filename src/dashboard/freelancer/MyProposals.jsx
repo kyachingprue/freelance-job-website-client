@@ -14,7 +14,7 @@ const MyProposals = () => {
   const { data: proposals, isLoading, isError } = useQuery({
     queryKey: ["userProposals", user?.email],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/proposals?email=${user?.email}`);
+      const res = await axiosPublic.get(`/proposals/${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email,
