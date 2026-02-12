@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import GoogleLogin from "./GoogleLogin";
 
 
 const Login = () => {
@@ -54,7 +55,7 @@ const Login = () => {
           Login your Account
         </h2>
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleLogin} className="space-y-3">
           {/* Email */}
           <div className="flex flex-col">
             <label className="text-gray-300 mb-2">Email</label>
@@ -111,7 +112,9 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <p className=" text-gray-300 text-center">Don't have an Account ? Please <Link to="/register" className="hover:text-blue-400 hover:underline">register</Link></p>
+          <GoogleLogin />
+
+          <p className=" text-gray-300 text-center">Don't have an Account ? Please <Link to="/register" className="hover:text-blue-400 hover:underline text-blue-500">register</Link></p>
         </form>
       </div>
     </div>

@@ -1,14 +1,26 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "motion/react";
+import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import GoogleLogin from "./GoogleLogin";
 
 const Register = () => {
   const { registerUser, profileUpdate } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const axiosPublic = useAxiosPublic();
+
+
+  const { mutateAsync: saveUserToDB } = useMutation({
+    mutationFn: async (userInfo) => {
+      const res = await axiosPublic.post("/users", userInfo);
+      return res.data;
+    },
+  });
 
   const {
     register,
@@ -20,18 +32,38 @@ const Register = () => {
   const password = watch("password");
 
   const profileImage = "https://i.ibb.co.com/Ccv7471/Mobile-App-Development-3.png"
+  const coverImage = "https://i.ibb.co.com/dwRWGtGh/White-Minimalist-Profile-Linked-In-Banner.png"
 
   const onSubmit = async (data) => {
     setLoading(true);
 
     try {
-      await registerUser(data.email, data.password);
+      const userCredential = await registerUser(data.email, data.password);
+      const firebaseUser = userCredential?.user;
       const fullName = `${data.firstName} ${data.lastName}`;
 
       await profileUpdate({
         displayName: fullName,
         photoURL: profileImage
       });
+
+      const userInfo = {
+        name: fullName,
+        email: data.email,
+        photoURL: profileImage,
+        coverImage: coverImage,
+        role: "freelancer", 
+        title: "",
+        skills: [],
+        github: "",
+        linkedin: "",
+        resume: "",
+        description: "",
+        isVerified: firebaseUser?.emailVerified || false,
+        createdAt: new Date(),
+      };
+
+      await saveUserToDB(userInfo);
 
       toast.success("Account created successfully 🎉");
       navigate("/login");
@@ -180,6 +212,8 @@ const Register = () => {
             )}
           </motion.button>
         </form>
+
+        <GoogleLogin/>
 
         <p className="text-sm text-center text-gray-600 mt-5">
           Already have an account?{" "}

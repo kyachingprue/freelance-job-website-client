@@ -19,11 +19,14 @@ import {
   Moon,
   PanelLeft,
 } from "lucide-react";
+import useRole from "../hooks/useRole";
+import DashboardLoading from "../components/DashboardLoading";
 
-export default function DashboardLayout({ role = "freelancer" }) {
+export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const { role, isLoading } = useRole();
 
   // ROLE BASED MENUS 
   const menus = {
@@ -64,6 +67,10 @@ export default function DashboardLayout({ role = "freelancer" }) {
     admin: "from-green-900 via-indigo-800 to-purple-800",
   };
 
+  if (isLoading) {
+    return <DashboardLoading />;
+  }
+
   return (
     <div className={`${darkMode ? "dark" : ""}`}>
       <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 transition-all">
@@ -92,12 +99,9 @@ export default function DashboardLayout({ role = "freelancer" }) {
           {/* Top Section */}
           <div className="flex items-center justify-between p-4">
 
-            {/* Role Title */}
-            {!collapsed && (
+            {role && !collapsed && (
               <Link to="/">
-                <h1 className="text-xl font-bold tracking-wide">
-                  {role.toUpperCase()}
-                </h1>
+                <h1 className="text-xl font-bold tracking-wide">{role.toUpperCase()}</h1>
               </Link>
             )}
 
@@ -120,7 +124,7 @@ export default function DashboardLayout({ role = "freelancer" }) {
 
           {/* Menu */}
           <nav className="mt-5 min-h-screen  px-3">
-            {menus[role].map((item, index) => {
+            {role && menus[role]?.map((item, index) => {
               const Icon = item.icon;
               return (
                 <NavLink
@@ -129,10 +133,7 @@ export default function DashboardLayout({ role = "freelancer" }) {
                   onClick={() => setMobileOpen(false)}
                   className={({ isActive }) =>
                     `flex items-center gap-4 p-3 my-2 rounded-xl transition-all
-            ${isActive
-                      ? "bg-white text-black shadow-lg"
-                      : "hover:bg-white/20"
-                    }`
+        ${isActive ? "bg-white text-black shadow-lg" : "hover:bg-white/20"}`
                   }
                 >
                   <Icon size={20} />
@@ -140,6 +141,7 @@ export default function DashboardLayout({ role = "freelancer" }) {
                 </NavLink>
               );
             })}
+
           </nav>
         </div>
 
@@ -148,7 +150,7 @@ export default function DashboardLayout({ role = "freelancer" }) {
         <div className="flex-1 flex flex-col">
 
           {/* Topbar */}
-          <div className="flex items-center justify-between bg-white dark:bg-gray-800 p-4 shadow">
+          <div className="flex items-center justify-between bg-white shadow-2xl dark:bg-gray-800 p-4">
 
             {/* Mobile Toggle */}
             <button
@@ -172,7 +174,7 @@ export default function DashboardLayout({ role = "freelancer" }) {
           </div>
 
           {/* Page Content */}
-          <div className="p-6 flex-1 text-gray-800 dark:text-gray-200">
+          <div className="p-6 flex-1 bg-gray-200 text-gray-800 dark:text-gray-200">
             <Outlet />
           </div>
         </div>

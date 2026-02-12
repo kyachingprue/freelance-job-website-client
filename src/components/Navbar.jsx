@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
-import { Bell, LayoutDashboard, LogOut } from "lucide-react";
+import { LayoutDashboard, LogOut } from "lucide-react";
 import Notifications from "../pages/Notifications";
 
 const Navbar = () => {
@@ -138,7 +138,7 @@ const Navbar = () => {
               </NavLink>
 
               {user && (
-                <div className="relative md:ml-10 mr-2">
+                <div className="relative md:ml-10 mt-2 mr-2">
                   <button
                     onClick={handleClick}
                     className="relative text-blue-800 hover:scale-110 transition"

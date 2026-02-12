@@ -6,6 +6,8 @@ import {
   sendPasswordResetEmail,
   onAuthStateChanged,
   updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import AuthContext from "../context/AuthContext";
 import auth from "../firebase/firebase.config";
@@ -14,6 +16,7 @@ import auth from "../firebase/firebase.config";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
 
 
   const registerUser = async (email, password) => {
@@ -24,6 +27,17 @@ const AuthProvider = ({ children }) => {
       password
     );
   };
+
+  const googleLogin = async () => {
+    try {
+      setLoading(true);
+      const result = await signInWithPopup(auth, googleProvider);
+      return result;
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   const loginUser = async (email, password) => {
     setLoading(true);
@@ -61,6 +75,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     registerUser,
+    googleLogin,
     loginUser,
     profileUpdate,
     logOut,

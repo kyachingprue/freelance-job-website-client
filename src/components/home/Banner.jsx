@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const floatAnimation = {
   animate: {
@@ -91,13 +92,15 @@ const Banner = () => {
               Hire Talent <ArrowRight size={18} />
             </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 rounded-xl border border-white font-medium bg-white/5 backdrop-blur hover:bg-white/10"
-            >
-              Find Work
-            </motion.button>
+            <Link to="/browse-jobs">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-3 rounded-xl border border-white font-medium bg-white/5 backdrop-blur hover:bg-white/10"
+              >
+                Find Work
+              </motion.button>
+            </Link>
           </div>
 
           {/* Stats */}

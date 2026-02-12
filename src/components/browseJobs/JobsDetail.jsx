@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "motion/react";
 import {
   Briefcase,
@@ -17,15 +17,27 @@ import {
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../LoadingSpinner";
+import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
+import Modal from "./Modal";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import ErrorLoading from "../ErrorLoading";
+
 
 const JobsDetail = () => {
   const { id } = useParams();
-  const axiosPulic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const { data: job, isLoading, isError, refetch } = useQuery({
     queryKey: ['job', id],
     queryFn: async () => {
-      const res = await axiosPulic.get(`/jobs/${id}`)
+      const res = await axiosPublic.get(`/jobs/${id}`)
       return res.data;
     },
     enabled: !!id,
@@ -42,6 +54,40 @@ const JobsDetail = () => {
         onRetry={refetch}
       />
     );
+  
+  const handleApplyClick = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setIsModalOpen(true);
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const proposalData = {
+        jobId: id,
+        jobTitle: job.title,
+        freelancerId: user.uid,
+        companyLogo: job.companyLogo,
+        freelancerName: user.displayName,
+        freelancerEmail: user.email,
+        coverLetter: data.coverLetter,
+        bidAmount: data.bidAmount,
+        status: "pending",
+        estimatedTime: data.estimatedTime,
+        createdAt: new Date(),
+      };
+
+      await axiosPublic.post("/proposals", proposalData);
+      toast.success("Proposal submitted successfully!");
+      setIsModalOpen(false);
+      navigate("/dashboard/freelancer-proposals");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit proposal.");
+    }
+  };
 
   return (
     <motion.section
@@ -71,6 +117,7 @@ const JobsDetail = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleApplyClick}
             className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-md"
           >
             Apply Now
@@ -151,8 +198,70 @@ const JobsDetail = () => {
             )}
           </div>
         </div>
-
       </div>
+      {/* ===== PROPOSAL FORM MODAL ===== */}
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <h2 className="text-xl font-semibold mb-4">Submit Your Proposal</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Cover Letter
+              </label>
+              <textarea
+                {...register("coverLetter", { required: true })}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+                rows={4}
+                placeholder="Write your proposal..."
+              />
+              {errors.coverLetter && (
+                <span className="text-red-500 text-sm">
+                  Cover letter is required
+                </span>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Bid Amount
+              </label>
+              <input
+                type="number"
+                {...register("bidAmount", { required: true })}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+                placeholder="Enter your bid amount"
+              />
+              {errors.bidAmount && (
+                <span className="text-red-500 text-sm">Bid amount is required</span>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Estimated Time (Days)
+              </label>
+              <input
+                type="number"
+                {...register("estimatedTime", { required: true })}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+                placeholder="Enter estimated completion days"
+              />
+              {errors.estimatedTime && (
+                <span className="text-red-500 text-sm">
+                  Estimated time is required
+                </span>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Submit Proposal
+            </button>
+          </form>
+        </Modal>
+      )}
     </motion.section>
   );
 };
