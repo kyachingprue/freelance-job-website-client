@@ -13,6 +13,8 @@ const ClientMyJobs = () => {
   const axiosSecure = useAxiosSecure();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editJob, setEditJob] = useState(null);
+
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -162,7 +164,7 @@ const ClientMyJobs = () => {
                 <X />
               </button>
 
-              <h3 className="text-xl font-bold mb-4">Post New Job</h3>
+              <h3 className="text-xl font-bold mb-4">Create New Job</h3>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
@@ -276,7 +278,7 @@ const ClientMyJobs = () => {
                   <div>
                     <label className="block font-medium mb-1">Company Logo URL</label>
                     <input
-                      {...register("companyLogo")}
+                      {...register("companyLogo", {required: true})}
                       className="w-full border border-gray-300 rounded-lg px-3 py-2"
                       placeholder="Paste image URL"
                     />
@@ -290,7 +292,7 @@ const ClientMyJobs = () => {
                     Skills (comma separated)
                   </label>
                   <input
-                    {...register("skills")}
+                    {...register("skills", {required: true})}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="React, Node.js, MongoDB"
                   />

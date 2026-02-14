@@ -117,9 +117,9 @@ const MyProposals = () => {
                           <XCircle size={16} /> Pending
                         </span>
                       )}
-                      {proposal.status === "approved" && (
+                      {proposal.status === "accepted" && (
                         <span className="flex items-center bg-green-600/20 rounded-full py-1.5 px-4 gap-1 text-green-600">
-                          <CheckCircle size={16} /> Approved
+                          <CheckCircle size={16} /> Accepted
                         </span>
                       )}
                       {proposal.status === "rejected" && (

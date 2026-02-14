@@ -23,11 +23,13 @@ import Modal from "./Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ErrorLoading from "../ErrorLoading";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const JobsDetail = () => {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useAuth();
@@ -41,6 +43,14 @@ const JobsDetail = () => {
       return res.data;
     },
     enabled: !!id,
+  })
+
+  const { data: userData } = useQuery({
+    queryKey: ['userData', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/email/${user.email}`)
+      return res.data;
+    }
   })
  
   if (isLoading) {
@@ -69,9 +79,11 @@ const JobsDetail = () => {
         jobId: id,
         jobTitle: job.title,
         freelancerId: user.uid,
+        freelancerProfile: userData?.photoURL || user?.photoURL,
         companyLogo: job.companyLogo,
         freelancerName: user.displayName,
         freelancerEmail: user.email,
+        clientEmail: job.client?.email || "kyachingpruemarma5@gmail.com",
         coverLetter: data.coverLetter,
         bidAmount: data.bidAmount,
         status: "pending",

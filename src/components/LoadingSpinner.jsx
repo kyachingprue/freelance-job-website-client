@@ -26,7 +26,7 @@ const LoadingSpinner = () => {
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ repeat: Infinity, duration: 1.6 }}
           className="mt-4 text-center text-sm font-medium tracking-wide
-          text-gray-300"
+          text-blue-950"
         >
           Loading, please wait...
         </motion.p>
