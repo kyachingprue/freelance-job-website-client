@@ -25,7 +25,6 @@ import DashboardLoading from "../components/DashboardLoading";
 export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const { role, isLoading } = useRole();
 
   // ROLE BASED MENUS 
@@ -41,11 +40,11 @@ export default function DashboardLayout() {
     ],
     client: [
       { name: "Dashboard", path: "/dashboard/client-dashboard", icon: LayoutDashboard },
-      { name: "Post a Job", path: "/dashboard/client-post-jobs", icon: PlusCircle },
       { name: "My Jobs", path: "/dashboard/client-my-jobs", icon: Briefcase },
       { name: "Proposals", path: "/dashboard/client-proposals", icon: FileText },
       { name: "Hire Freelancer", path: "/dashboard/client-hire-freelancer", icon: Users },
       { name: "Payments", path: "/dashboard/client-payments", icon: CreditCard },
+      { name: "Notifications", path: "/dashboard/client-notifications", icon: PlusCircle },
       { name: "Profile", path: "/dashboard/client-profile", icon: User },
     ],
     admin: [
@@ -72,8 +71,8 @@ export default function DashboardLayout() {
   }
 
   return (
-    <div className={`${darkMode ? "dark" : ""}`}>
-      <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 transition-all">
+    <div>
+      <div className="flex min-h-screen transition-all">
 
         {/* Overlay (Mobile only) */}
         {mobileOpen && (

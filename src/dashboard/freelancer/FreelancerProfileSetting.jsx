@@ -223,7 +223,7 @@ const FreelancerProfileSetting = () => {
   }
 
   return (
-    <div className="bg-sky-100 min-h-screen rounded-2xl overflow-hidden">
+    <div className="bg-sky-100 h-163 overflow-y-scroll rounded-2xl overflow-hidden">
       {/* COVER SECTION */}
       <div className="relative h-72 w-full">
         <img
@@ -271,7 +271,7 @@ const FreelancerProfileSetting = () => {
         <div className="mt-20 px-10">
           <h2 className="text-2xl text-gray-800 font-bold">{dbUser?.name}</h2>
           <p className="text-gray-600 py-1.5">{dbUser?.email}</p>
-          <p className="mt-1 inline-block bg-indigo-900/10 text-indigo-600 px-3 py-1 rounded-full text-sm capitalize">
+          <p className="mt-1 inline-block bg-indigo-900/15 font-semibold text-indigo-600 px-3 py-1.5 rounded-full text-sm capitalize">
             {dbUser?.role}
           </p>
         </div>
@@ -336,13 +336,13 @@ const FreelancerProfileSetting = () => {
                 "No resume uploaded"
               )}
             </p>
-            <a
+            {resumeURL && (<a
               href={resumeURL}
               download
               className="text-blue-500 underline"
             >
               Download Resume
-            </a>
+            </a>)}
           </div>
           {/* 2️⃣ Right side button */}
           <div>

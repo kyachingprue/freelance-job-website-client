@@ -31,8 +31,8 @@ const Register = () => {
 
   const password = watch("password");
 
-  const profileImage = "https://i.ibb.co.com/Ccv7471/Mobile-App-Development-3.png"
-  const coverImage = "https://i.ibb.co.com/dwRWGtGh/White-Minimalist-Profile-Linked-In-Banner.png"
+  const profileImage = "https://i.ibb.co.com/TMQBCkRL/ai-generated-close-up-of-a-young-asian-boy-in-winter-attire-ai-generative-photo.jpg";
+  const coverImage = "https://i.ibb.co.com/dwRWGtGh/White-Minimalist-Profile-Linked-In-Banner.png";
 
   const onSubmit = async (data) => {
     setLoading(true);

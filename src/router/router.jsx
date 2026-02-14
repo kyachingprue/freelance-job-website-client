@@ -18,8 +18,6 @@ import FreelancerNotifications from "../dashboard/freelancer/FreelancerNotificat
 import FreelancerEarnings from "../dashboard/freelancer/FreelancerEarnings";
 import FreelancerProfileSetting from "../dashboard/freelancer/FreelancerProfileSetting";
 import ClientDashboard from "../dashboard/client/ClientDashboard";
-import ClientPostAJobs from "../dashboard/client/ClientPostAJobs";
-import ClientMyJobs from "../dashboard/client/ClientMyJobs";
 import ClientProposals from "../dashboard/client/ClientProposals";
 import ClientHireFreelancer from "../dashboard/client/ClientHireFreelancer";
 import ClientPayments from "../dashboard/client/ClientPayments";
@@ -33,6 +31,8 @@ import AdminCategories from "../dashboard/admin/AdminCategories";
 import AdminReports from "../dashboard/admin/AdminReports";
 import AdminSettings from "../dashboard/admin/AdminSettings";
 import Notifications from "../pages/Notifications";
+import ClientMyJobs from "../dashboard/client/ClientMyJobs";
+import ClientNotifications from "../dashboard/client/ClientNotifications";
 
 const router = createBrowserRouter([
   {
@@ -109,12 +109,12 @@ const router = createBrowserRouter([
         element: <ClientDashboard/>
       },
       {
-        path: 'client-post-jobs',
-        element: <ClientPostAJobs/>
-      },
-      {
         path: 'client-my-jobs',
         element: <ClientMyJobs/>
+      },
+      {
+        path: 'client-notifications',
+        element: <ClientNotifications/>
       },
       {
         path: 'client-proposals',

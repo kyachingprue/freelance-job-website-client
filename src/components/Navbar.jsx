@@ -7,10 +7,13 @@ import useAuth from "../hooks/useAuth";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import Notifications from "../pages/Notifications";
 import useRole from "../hooks/useRole";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
+  const axiosSecure = useAxiosSecure();
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [openMenu, setOpenMenu] = useState(false);
@@ -18,6 +21,13 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+  const { data: userData} = useQuery({
+    queryKey: ['userData', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/email/${user.email}`);
+      return res.data;
+    }
+  })
 
   // Scroll hide/show logic
   useEffect(() => {
@@ -148,9 +158,9 @@ const Navbar = () => {
                     <IoIosNotificationsOutline size={28} />
 
                     {/* Notification Count */}
-                    {notifications > 0 && (
+                    {notifications.length > 0 && (
                       <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                        {notifications}
+                        {notifications.length}
                       </span>
                     )}
                   </button>
@@ -184,9 +194,9 @@ const Navbar = () => {
               ) : (
                 <div className="relative">
                   <img
-                    src={user?.photoURL || "https://i.ibb.co/ZYW3VTp/user.png"}
+                      src={userData?.photoURL}
                     alt="user"
-                    className="w-10 h-10 rounded-full cursor-pointer border-2 border-indigo-500"
+                    className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-indigo-500"
                     onClick={() => setOpenMenu(!openMenu)}
                   />
 
@@ -198,7 +208,7 @@ const Navbar = () => {
                       className="absolute right-0 mt-3 w-44 bg-white shadow-xl rounded-lg p-3"
                     >
                       <Link
-                        to="/dashboard"
+                          to={`/dashboard/${role}-dashboard`}
                         className="block px-3 py-2 rounded hover:bg-gray-100"
                       >
                           <button className="flex items-center gap-2">
