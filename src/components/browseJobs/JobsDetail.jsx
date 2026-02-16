@@ -83,7 +83,7 @@ const JobsDetail = () => {
         companyLogo: job.companyLogo,
         freelancerName: user.displayName,
         freelancerEmail: user.email,
-        clientEmail: job.client?.email || "kyachingpruemarma5@gmail.com",
+        clientEmail: job.client?.email,
         coverLetter: data.coverLetter,
         bidAmount: data.bidAmount,
         status: "pending",

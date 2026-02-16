@@ -223,7 +223,7 @@ const FreelancerProfileSetting = () => {
   }
 
   return (
-    <div className="bg-sky-100 h-163 overflow-y-scroll rounded-2xl overflow-hidden">
+    <div className="bg-sky-100 h-full md:h-163 overflow-y-auto rounded-2xl overflow-hidden">
       {/* COVER SECTION */}
       <div className="relative h-72 w-full">
         <img
@@ -266,7 +266,7 @@ const FreelancerProfileSetting = () => {
         </div>
       </div>
 
-      <div className="flex justify-between pb-4 items-start md:items-center gap-5">
+      <div className="md:flex md:justify-between pb-4 items-start md:items-center gap-5">
         {/* USER INFO */}
         <div className="mt-20 px-10">
           <h2 className="text-2xl text-gray-800 font-bold">{dbUser?.name}</h2>

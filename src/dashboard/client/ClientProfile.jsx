@@ -67,7 +67,7 @@ const ClientProfile = () => {
   }
 
   return (
-    <div className="bg-sky-100 h-164 overflow-y-scroll rounded-2xl">
+    <div className="bg-sky-100 h-full md:h-164 md:overflow-y-scroll rounded-2xl">
 
       {/* ✅ COVER IMAGE */}
       <div className="relative h-72 w-full">

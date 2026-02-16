@@ -7,19 +7,19 @@ import { Eye, Plus,X } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const ClientMyJobs = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [editJob, setEditJob] = useState(null);
 
 
   const { register, handleSubmit, reset } = useForm();
 
   // ✅ Fetch client jobs
-  const { data: jobs = [], refetch } = useQuery({
+  const { data: jobs = [], refetch, isLoading } = useQuery({
     queryKey: ["clientJobs", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -80,8 +80,11 @@ const ClientMyJobs = () => {
     }
   };
 
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
   return (
-    <div className="md:p-6">
+    <div className="md:p-6 h-full md:h-160 overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">My Total Jobs ({jobs?.length})</h2>

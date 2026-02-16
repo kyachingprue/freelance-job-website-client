@@ -30,9 +30,10 @@ import AdminPayments from "../dashboard/admin/AdminPayments";
 import AdminCategories from "../dashboard/admin/AdminCategories";
 import AdminReports from "../dashboard/admin/AdminReports";
 import AdminSettings from "../dashboard/admin/AdminSettings";
-import Notifications from "../pages/Notifications";
 import ClientMyJobs from "../dashboard/client/ClientMyJobs";
 import ClientNotifications from "../dashboard/client/ClientNotifications";
+import Notifications from "../components/notifications/Notifications";
+import ClientHireDetails from "../dashboard/client/ClientHireDetails";
 
 const router = createBrowserRouter([
   {
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: 'client-hire-freelancer',
         element: <ClientHireFreelancer/>
+      },
+      {
+        path: "/dashboard/hire-details/:id",
+        element: <ClientHireDetails/>
       },
       {
         path: 'client-payments',

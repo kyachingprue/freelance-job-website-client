@@ -40,7 +40,7 @@ const ClientProposals = () => {
   }
 
   return (
-    <div className="md:p-6">
+    <div className="md:p-6 h-160 overflow-y-auto">
       <h2 className="text-2xl font-bold mb-6">
         Client Proposals ({proposals.length})
       </h2>

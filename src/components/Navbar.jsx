@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 import { LayoutDashboard, LogOut } from "lucide-react";
-import Notifications from "../pages/Notifications";
 import useRole from "../hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
+import NotificationDropdown from "./notifications/NotificationDropdown";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const { role } = useRole();
+  const dropdownRef = useRef(null);
   const axiosSecure = useAxiosSecure();
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -29,6 +30,18 @@ const Navbar = () => {
     }
   })
 
+  const { data: unreadCount = 0, refetch } = useQuery({
+    queryKey: ["unreadCount", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/notifications/unread-count/${user.email}`
+      );
+      return res.data.count;
+    },
+    refetchInterval: 5000, // auto refresh every 5 sec
+  });
+
   // Scroll hide/show logic
   useEffect(() => {
     const handleScroll = () => {
@@ -44,17 +57,38 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const notifications = [
-    { message: "New job proposal received", time: "2 min ago" },
-    { message: "Your job has been approved", time: "1 hour ago" },
-  ];
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
 
-  const handleClick = () => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClick = async () => {
+    if (!user?.email) return;
+
     if (window.innerWidth < 768) {
-      navigate("/notifications"); // Small device → Full page
+      navigate("/notifications");
     } else {
-      setOpen(!open); // Large device → Dropdown
+      setOpen(!open);
     }
+
+    // Mark all as read
+    await axiosSecure.patch(
+      `/notifications/mark-read/${user.email}`
+    );
+
+    refetch(); // refresh unread count
   };
 
   return (
@@ -150,7 +184,10 @@ const Navbar = () => {
               </NavLink>
 
               {user && (
-                <div className="relative md:ml-10 mt-2 mr-2">
+                <div
+                  ref={dropdownRef}
+                  className="relative md:ml-10 mt-2 mr-2"
+                >
                   <button
                     onClick={handleClick}
                     className="relative text-blue-800 hover:scale-110 transition"
@@ -158,19 +195,16 @@ const Navbar = () => {
                     <IoIosNotificationsOutline size={28} />
 
                     {/* Notification Count */}
-                    {notifications.length > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                        {notifications.length}
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                        {unreadCount}
                       </span>
                     )}
                   </button>
 
-                  {/* Dropdown (large device only) */}
-                  <Notifications
-                    isOpen={open}
-                    setIsOpen={setOpen}
-                    notifications={notifications}
-                  />
+                  {open && (
+                    <NotificationDropdown close={() => setOpen(false)} />
+                  )}
                 </div>
               )}
 
@@ -237,19 +271,16 @@ const Navbar = () => {
                     <IoIosNotificationsOutline size={32} />
 
                     {/* Notification Count */}
-                    {notifications > 0 && (
+                    {unreadCount > 0 && (
                       <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                        {notifications}
+                        {unreadCount}
                       </span>
                     )}
                   </button>
 
-                  {/* Dropdown (large device only) */}
-                  <Notifications
-                    isOpen={open}
-                    setIsOpen={setOpen}
-                    notifications={notifications}
-                  />
+                  {open && (
+                    <NotificationDropdown close={() => setOpen(false)} />
+                  )}
                 </div>
               )}
 
@@ -287,30 +318,37 @@ const Navbar = () => {
                   </NavLink>
                   <NavLink
                     onClick={() => setMobileMenu(false)}
-                    to="/about"
+                    to="/browse-jobs"
                     className="block px-3 py-2 rounded hover:bg-indigo-100"
                   >
-                    About
+                    Browse Jobs
                   </NavLink>
                   <NavLink
                     onClick={() => setMobileMenu(false)}
-                    to="/jobs"
+                    to="/how-it-works"
                     className="block px-3 py-2 rounded hover:bg-indigo-100"
                   >
-                    All Jobs
+                    How It Works
                   </NavLink>
                   <NavLink
                     onClick={() => setMobileMenu(false)}
-                    to="/experience"
+                    to="/categories"
                     className="block px-3 py-2 rounded hover:bg-indigo-100"
                   >
-                    Experience
+                    Categories
+                  </NavLink>
+                  <NavLink
+                    onClick={() => setMobileMenu(false)}
+                    to="/pricing"
+                    className="block px-3 py-2 rounded hover:bg-indigo-100"
+                  >
+                    Pricing
                   </NavLink>
 
                   {user && (
                     <NavLink
                       onClick={() => setMobileMenu(false)}
-                      to="/dashboard"
+                      to={`/dashboard/${role}-dashboard`}
                       className="block px-3 py-2 rounded hover:bg-indigo-100"
                     >
                       Dashboard
