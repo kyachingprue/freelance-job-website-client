@@ -34,6 +34,7 @@ import ClientMyJobs from "../dashboard/client/ClientMyJobs";
 import ClientNotifications from "../dashboard/client/ClientNotifications";
 import Notifications from "../components/notifications/Notifications";
 import ClientHireDetails from "../dashboard/client/ClientHireDetails";
+import AdminProfile from "../dashboard/admin/AdminProfile";
 
 const router = createBrowserRouter([
   {
@@ -165,6 +166,10 @@ const router = createBrowserRouter([
       {
         path: 'admin-reports',
         element: <AdminReports/>
+      },
+      {
+        path: 'admin-profile',
+        element: <AdminProfile/>
       },
       {
         path: 'admin-settings',

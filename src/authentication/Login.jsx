@@ -3,26 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import GoogleLogin from "./GoogleLogin";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 const Login = () => {
   const { loginUser, resetPassword } = useAuth();
   const navigate = useNavigate();
-
+  const axiosPublic = useAxiosPublic();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Handle login
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await loginUser(email, password); // your useAuth login function
+       await loginUser(email, password);
+
+      // 🔥 Update isVerified in database
+      await axiosPublic.patch(`/users/verify/${email}`);
+
       toast.success("Login successful!");
-      navigate("/"); 
+      navigate("/");
+
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         toast.error("Invalid email or password");
@@ -33,6 +38,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+
 
   // Handle password reset
   const handleResetPassword = async () => {

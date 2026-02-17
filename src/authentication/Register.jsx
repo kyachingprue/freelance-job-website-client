@@ -31,7 +31,7 @@ const Register = () => {
 
   const password = watch("password");
 
-  const profileImage = "https://i.ibb.co.com/TMQBCkRL/ai-generated-close-up-of-a-young-asian-boy-in-winter-attire-ai-generative-photo.jpg";
+  const profileImage = "https://i.ibb.co.com/QvXcKZ7z/Chat-GPT-Image-Aug-8-2025-12-29-29-AM.png";
   const coverImage = "https://i.ibb.co.com/dwRWGtGh/White-Minimalist-Profile-Linked-In-Banner.png";
 
   const onSubmit = async (data) => {

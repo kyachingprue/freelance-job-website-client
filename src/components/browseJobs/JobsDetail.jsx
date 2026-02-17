@@ -83,9 +83,12 @@ const JobsDetail = () => {
         companyLogo: job.companyLogo,
         freelancerName: user.displayName,
         freelancerEmail: user.email,
+        clientName: job.client?.name,
+        clientLocation: job.client?.location,
         clientEmail: job.client?.email,
         coverLetter: data.coverLetter,
         bidAmount: data.bidAmount,
+        freelancerPortfolio: data.portfolioLink,
         status: "pending",
         estimatedTime: data.estimatedTime,
         createdAt: new Date(),
@@ -261,6 +264,23 @@ const JobsDetail = () => {
               {errors.estimatedTime && (
                 <span className="text-red-500 text-sm">
                   Estimated time is required
+                </span>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Portfolio Link
+              </label>
+              <input
+                type="url"
+                {...register("portfolioLink", { required: true })}
+                className="w-full border border-gray-300 rounded-lg p-2 mt-1"
+                placeholder="Enter your portfolio link"
+              />
+              {errors.portfolioLink && (
+                <span className="text-red-500 text-sm">
+                  Portfolio link is required
                 </span>
               )}
             </div>

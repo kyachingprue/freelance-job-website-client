@@ -15,8 +15,7 @@ import {
   BarChart3,
   Settings,
   Menu,
-  Sun,
-  Moon,
+  UserRoundCog,
   PanelLeft,
 } from "lucide-react";
 import useRole from "../hooks/useRole";
@@ -55,6 +54,7 @@ export default function DashboardLayout() {
       { name: "Payments", path: "/dashboard/admin-payments", icon: CreditCard },
       { name: "Categories", path: "/dashboard/admin-categories", icon: Folder },
       { name: "Reports", path: "/dashboard/admin-reports", icon: BarChart3 },
+      { name: "Profile", path: "/dashboard/admin-profile", icon: UserRoundCog },
       { name: "Setting", path: "/dashboard/admin-settings", icon: Settings },
     ],
   };

@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const ClientHireFreelancer = () => {
   const { user } = useAuth();
@@ -19,11 +20,11 @@ const ClientHireFreelancer = () => {
   });
 
   if (isLoading) {
-    return <p className="text-center mt-10">Loading hired freelancers...</p>;
+    return <LoadingSpinner/>;
   }
 
   return (
-    <div className="p-6">
+    <div className="p-2 h-full md:h-160 overflow-y-auto w-full md:p-6">
       <h2 className="text-2xl font-bold mb-6">Hired Freelancers</h2>
 
       {hires.length === 0 ? (

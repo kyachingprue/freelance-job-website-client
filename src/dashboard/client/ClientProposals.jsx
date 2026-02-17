@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const ClientProposals = () => {
   const { user } = useAuth();
@@ -57,6 +58,7 @@ const ClientProposals = () => {
                 <th className="px-4 py-3">Freelancer</th>
                 <th className="px-4 py-3">Job Title</th>
                 <th className="px-4 py-3">Bid</th>
+                <th className="px-4 py-3">Portfolio Link</th>
                 <th className="px-4 py-3">Estimated Time</th>
                 <th className="px-4 py-3">Status</th>
               </tr>
@@ -93,6 +95,13 @@ const ClientProposals = () => {
                   {/* Bid */}
                   <td className="px-4 py-3 font-medium">
                     ${proposal.bidAmount}
+                  </td>
+
+                  {/* Portfolio Link */}
+                  <td className="px-4 py-3 font-medium">
+                    <Link to={proposal.freelancerPortfolio} target='_blank' className="text-blue-500 hover:underline">
+                      <p className="bg-blue-600/15 py-1.5 px-4 rounded-full">View Portfolio</p>
+                    </Link>
                   </td>
 
                   {/* Estimated Time */}

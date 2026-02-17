@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const ClientHireDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
 
   const { data, isLoading } = useQuery({
     queryKey: ["hireDetails", id],

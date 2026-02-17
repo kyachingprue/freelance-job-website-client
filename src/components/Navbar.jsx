@@ -88,7 +88,7 @@ const Navbar = () => {
       `/notifications/mark-read/${user.email}`
     );
 
-    refetch(); // refresh unread count
+    refetch(); 
   };
 
   return (
