@@ -47,11 +47,25 @@ const JobsDetail = () => {
 
   const { data: userData } = useQuery({
     queryKey: ['userData', user?.email],
+    enabled: !!user?.email, // 🔥 IMPORTANT ADD THIS
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/email/${user.email}`)
       return res.data;
     }
   })
+
+  const role = userData?.role;
+  const jobStatus = job?.status?.toLowerCase();
+  const isOwner = job?.client?.email === user?.email;
+  const isJobClosed = jobStatus !== "open";
+
+  const isDisabled =
+    !user ||
+    !role ||
+    role !== "freelancer" ||
+    isOwner ||
+    isJobClosed;   
+
  
   if (isLoading) {
     return <LoadingSpinner/>
@@ -88,6 +102,8 @@ const JobsDetail = () => {
         clientEmail: job.client?.email,
         coverLetter: data.coverLetter,
         bidAmount: data.bidAmount,
+        budgetType: job.budgetType,
+        currency: job.currency,
         freelancerPortfolio: data.portfolioLink,
         status: "pending",
         estimatedTime: data.estimatedTime,
@@ -130,12 +146,23 @@ const JobsDetail = () => {
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: isDisabled ? 1 : 1.05 }}
+            whileTap={{ scale: isDisabled ? 1 : 0.95 }}
             onClick={handleApplyClick}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-md"
+            disabled={isDisabled}
+            className={`px-6 py-3 rounded-xl font-semibold shadow-md transition
+              ${isDisabled
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-indigo-600 hover:bg-indigo-700 text-white"
+              }`}
           >
-            Apply Now
+            {isJobClosed
+              ? "Job Closed"
+              : role !== "freelancer"
+                ? "Only Freelancer Can Apply"
+                : isOwner
+                  ? "You Posted This Job"
+                  : "Apply Now"}
           </motion.button>
         </div>
 

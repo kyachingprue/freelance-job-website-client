@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import toast from "react-hot-toast";
-import { Eye, Plus,X } from "lucide-react";
+import { Eye, Plus, X } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
@@ -14,7 +14,6 @@ const ClientMyJobs = () => {
   const axiosSecure = useAxiosSecure();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -80,8 +79,47 @@ const ClientMyJobs = () => {
     }
   };
 
+  // ✅ Delete Job
+  const handleDelete = async (id) => {
+    toast((t) => (
+      <div className="p-4">
+        <p className="font-medium mb-3 text-gray-800">
+          Are you sure you want to delete this job?
+        </p>
+
+        <div className="flex justify-end gap-3">
+          {/* Cancel */}
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-4 py-1.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm"
+          >
+            Cancel
+          </button>
+
+          {/* Confirm Delete */}
+          <button
+            onClick={async () => {
+              try {
+                await axiosSecure.delete(`/jobs/${id}`);
+                toast.dismiss(t.id);
+                toast.success("Job deleted successfully 🗑️");
+                refetch();
+              } catch (error) {
+                toast.error("Failed to delete job ❌", error?.message);
+              }
+            }}
+            className="px-4 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
+
   if (isLoading) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />
   }
   return (
     <div className="md:p-6 h-full md:h-160 overflow-y-auto">
@@ -111,7 +149,6 @@ const ClientMyJobs = () => {
                 <th className="px-6 py-3">Title</th>
                 <th className="px-6 py-3">Category</th>
                 <th className="px-6 py-3">Budget</th>
-                <th className="px-6 py-3">Deadline</th>
                 <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Action</th>
               </tr>
@@ -129,14 +166,46 @@ const ClientMyJobs = () => {
                   <td className="px-6 py-3">
                     {job.currency} {job.budget}
                   </td>
-                  <td className="px-6 py-3">{job.deadline}</td>
                   <td className="px-6 py-3 text-green-600 font-medium">
                     {job.status}
                   </td>
-                  <td className="px-6 py-3 text-green-600 font-medium">
-                    <Link to={`/job-details/${job._id}`} className="flex items-center gap-2 hover:underline text-blue-500">
-                    <Eye size={17} /> View
-                    </Link>
+                  <td className="py-3">
+                    <div className="flex items-center gap-4">
+
+                      {/* View Button */}
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+
+                          {/* View Button */}
+                          <motion.div
+                            whileHover={{ scale: 1.07 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <Link
+                              to={`/job-details/${job._id}`}
+                              className="px-4 py-2 rounded-lg text-white text-sm font-medium
+                              bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500
+                              shadow-md hover:shadow-lg transition duration-300"
+                            >
+                              View
+                            </Link>
+                          </motion.div>
+
+                          {/* Delete Button */}
+                          <motion.button
+                            whileHover={{ scale: 1.07 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => handleDelete(job._id)}
+                            className="px-4 py-2 rounded-lg text-white text-sm font-medium
+                            bg-linear-to-r from-red-500 via-rose-500 to-orange-500
+                            shadow-md hover:shadow-lg transition duration-300"
+                          >
+                            Delete
+                          </motion.button>
+
+                        </div>
+                      </td>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -281,7 +350,7 @@ const ClientMyJobs = () => {
                   <div>
                     <label className="block font-medium mb-1">Company Logo URL</label>
                     <input
-                      {...register("companyLogo", {required: true})}
+                      {...register("companyLogo", { required: true })}
                       className="w-full border border-gray-300 rounded-lg px-3 py-2"
                       placeholder="Paste image URL"
                     />
@@ -295,7 +364,7 @@ const ClientMyJobs = () => {
                     Skills (comma separated)
                   </label>
                   <input
-                    {...register("skills", {required: true})}
+                    {...register("skills", { required: true })}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     placeholder="React, Node.js, MongoDB"
                   />
@@ -322,8 +391,8 @@ const ClientMyJobs = () => {
                   type="submit"
                   disabled={loading}
                   className={`w-full py-3 rounded-lg text-white font-medium transition ${loading
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-indigo-600 hover:bg-indigo-700"
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-indigo-600 hover:bg-indigo-700"
                     }`}
                 >
                   {loading ? "Posting Job..." : "Post Job"}

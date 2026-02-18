@@ -32,52 +32,88 @@ const ClientHireFreelancer = () => {
           <p>No freelancers hired yet.</p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {hires.map((hire) => (
-            <motion.div
-              key={hire._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white shadow-md rounded-xl p-5 hover:shadow-xl transition"
-            >
-              <img
-                src={hire.freelancerProfile}
-                alt={hire.freelancerName}
-                className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
-              />
+          <div className="grid md:grid-cols-2 gap-4">
+            {hires.map((hire) => (
+              <motion.div
+                key={hire._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.03 }}
+                className="bg-white/80 backdrop-blur-md border border-gray-200 
+                 shadow-lg rounded-2xl p-6 transition-all duration-300 
+                 hover:shadow-2xl hover:border-blue-400"
+              >
+                {/* Profile Section */}
+                <div className="flex items-center gap-4">
+                  <img
+                    src={hire.freelancerProfile}
+                    alt={hire.freelancerName}
+                    className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                  />
 
-              <h3 className="text-lg font-semibold text-center">
-                {hire.freelancerName}
-              </h3>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {hire.freelancerName}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {hire.freelancerEmail}
+                    </p>
+                  </div>
+                </div>
 
-              <p className="text-center text-sm text-gray-500">
-                {hire.freelancerEmail}
-              </p>
+                {/* Job Info */}
+                <div className="mt-4 space-y-2">
+                  <p className="text-sm">
+                    <span className="text-sm md:text-base font-bold text-gray-700">Job:</span>{" "}
+                    <span className="text-blue-600 font-medium">
+                      {hire.jobTitle}
+                    </span>
+                  </p>
 
-              <div className="mt-4">
-                <p className="font-medium">
-                  Job Title:
-                  <span className="text-blue-600 ml-1">
-                    {hire.jobTitle}
-                  </span>
-                </p>
+                  <div className="flex flex-row items-center gap-2">
+                    <p className="text-sm font-bold text-gray-500">
+                      Hired At:
+                    </p>
+                    <span className="text-sm text-blue-500">{new Date(hire.hiredAt).toLocaleDateString()}</span>
+                  </div>
 
-                <p className="text-sm text-gray-400 mt-2">
-                  Hired At: {new Date(hire.hiredAt).toLocaleDateString()}
-                </p>
-              </div>
+                  {/* Status Badge */}
+                  <div className="flex flex-row items-center gap-2">
+                    <p className="text-gray-700 text-sm md:text-base font-bold">Status:</p>
+                    <span className="inline-block px-3 py-1.5 text-xs rounded-full 
+                         bg-green-100 text-green-700 font-medium">
+                      {hire.status || "In Progress"}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="mt-4 text-center">
-                <button
-                  onClick={() => navigate(`/dashboard/hire-details/${hire._id}`)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                >
-                  View Details
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                {/* Buttons */}
+                <div className="mt-5 flex gap-3">
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/hire-details/${hire._id}`)
+                    }
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 
+                     text-white py-2 rounded-xl text-sm font-medium 
+                     transition"
+                  >
+                    View Details
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      navigate(`/dashboard/add-work/${hire._id}`)
+                    }
+                    className="flex-1 border border-blue-600 text-blue-600 
+                     hover:bg-blue-200 py-2 rounded-xl text-sm 
+                     font-medium transition"
+                  >
+                    Add Work
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
       )}
     </div>
   );

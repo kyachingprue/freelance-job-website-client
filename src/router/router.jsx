@@ -35,6 +35,7 @@ import ClientNotifications from "../dashboard/client/ClientNotifications";
 import Notifications from "../components/notifications/Notifications";
 import ClientHireDetails from "../dashboard/client/ClientHireDetails";
 import AdminProfile from "../dashboard/admin/AdminProfile";
+import ClientAddWork from "../dashboard/client/ClientAddWork";
 
 const router = createBrowserRouter([
   {
@@ -127,8 +128,12 @@ const router = createBrowserRouter([
         element: <ClientHireFreelancer/>
       },
       {
-        path: "/dashboard/hire-details/:id",
+        path: "hire-details/:id",
         element: <ClientHireDetails/>
+      },
+      {
+        path: "add-work/:id",
+        element: <ClientAddWork/>
       },
       {
         path: 'client-payments',

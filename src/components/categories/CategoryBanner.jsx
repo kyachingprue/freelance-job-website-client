@@ -7,7 +7,7 @@ const CategoryBanner = () => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
-      className="relative w-full h-110 shadow-xl pt-16 md:pt-16 cursor-pointer"
+      className="relative w-full h-110 shadow-xl mt-16 md:mt-16 cursor-pointer"
     >
       {/* Background Image */}
       <img
