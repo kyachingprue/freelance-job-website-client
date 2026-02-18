@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "motion/react";
 import toast from "react-hot-toast";
-import { Eye, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
@@ -295,6 +295,7 @@ const ClientMyJobs = () => {
                       {...register("experienceLevel", { required: true })}
                       className="w-full border border-gray-300 rounded-lg px-3 py-2"
                     >
+                      <option value="Internship">Internship</option>
                       <option value="Entry">Entry</option>
                       <option value="Intermediate">Intermediate</option>
                       <option value="Expert">Expert</option>

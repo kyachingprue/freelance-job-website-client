@@ -55,7 +55,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-indigo-950 to-black px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-sky-800 via-indigo-950 to-black px-4">
       <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-10 max-w-md w-full shadow-2xl">
         <h2 className="text-3xl font-extrabold text-center mb-6 bg-linear-to-r from-indigo-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
           Login your Account

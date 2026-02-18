@@ -47,7 +47,7 @@ const JobsDetail = () => {
 
   const { data: userData } = useQuery({
     queryKey: ['userData', user?.email],
-    enabled: !!user?.email, // 🔥 IMPORTANT ADD THIS
+    enabled: !!user?.email, 
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/email/${user.email}`)
       return res.data;
@@ -60,12 +60,10 @@ const JobsDetail = () => {
   const isJobClosed = jobStatus !== "open";
 
   const isDisabled =
-    !user ||
-    !role ||
-    role !== "freelancer" ||
-    isOwner ||
-    isJobClosed;   
-
+    user &&
+    (role !== "freelancer" ||
+      isOwner ||
+      isJobClosed); 
  
   if (isLoading) {
     return <LoadingSpinner/>
@@ -156,13 +154,15 @@ const JobsDetail = () => {
                 : "bg-indigo-600 hover:bg-indigo-700 text-white"
               }`}
           >
-            {isJobClosed
-              ? "Job Closed"
-              : role !== "freelancer"
-                ? "Only Freelancer Can Apply"
-                : isOwner
-                  ? "You Posted This Job"
-                  : "Apply Now"}
+            {!user
+              ? "Apply Job"
+              : isJobClosed
+                ? "Job Closed"
+                : role !== "freelancer"
+                  ? "Only Freelancer Can Apply"
+                  : isOwner
+                    ? "You Posted This Job"
+                    : "Apply Now"}
           </motion.button>
         </div>
 
