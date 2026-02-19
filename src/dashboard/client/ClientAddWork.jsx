@@ -7,14 +7,16 @@ import {
   Github,
   MessageSquare,
   Send,
+  ArrowLeft,
 } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { toast } from "react-hot-toast";
 
 const ClientAddWork = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -44,7 +46,7 @@ const ClientAddWork = () => {
   };
 
   return (
-    <div className="h-full md:h-160 overflow-y-auto md:p-2">
+    <div className="h-full lg:h-160 overflow-y-auto md:p-2">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -52,9 +54,13 @@ const ClientAddWork = () => {
         className=" md:max-w-4xl mx-auto bg-white/80 backdrop-blur-md 
                    shadow-2xl rounded-2xl p-4 md:p-8 border border-gray-200"
       >
-        <h2 className="text-2xl md:text-4xl font-bold mb-6 text-gray-800 text-center">
-          Assign Work to Freelancer
-        </h2>
+       
+        <div className="flex items-center gap-3 md:gap-8 lg:gap-36 pb-5">
+          <ArrowLeft size={26} className="cursor-pointer text-gray-600 hover:text-gray-800 " onClick={() => navigate(-1)} />
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 text-center">
+            Assign Work to Freelancer
+          </h2>
+         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 

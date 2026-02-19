@@ -32,7 +32,7 @@ const ClientHireFreelancer = () => {
           <p>No freelancers hired yet.</p>
         </div>
       ) : (
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {hires.map((hire) => (
               <motion.div
                 key={hire._id}

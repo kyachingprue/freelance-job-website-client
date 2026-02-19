@@ -23,7 +23,7 @@ const ClientHireDetails = () => {
   const { hireInfo, freelancerInfo } = data;
 
   return (
-    <div className="p-6">
+    <div className="p-2 md:p-3 lg:p-6">
 
       {/* Job Information */}
       <div className="bg-white shadow-md rounded-xl p-6 mb-6">
@@ -35,18 +35,20 @@ const ClientHireDetails = () => {
       </div>
 
       {/* Freelancer Full Profile */}
-      <div className="bg-white shadow-md rounded-xl p-6">
+      <div className="bg-white shadow-md overflow-hidden rounded-xl p-2 md:p-6">
 
         <div className="flex items-center gap-6 mb-6">
           <img
             src={freelancerInfo.photoURL}
             alt={freelancerInfo.name}
-            className="w-24 h-24 rounded-full object-cover"
+            className="w-12 md:w-24 h-12 md:h-24 rounded-full object-cover"
           />
           <div>
-            <h2 className="text-2xl font-bold">{freelancerInfo.name}</h2>
+            <h2 className="text-xl md:text-2xl font-bold">{freelancerInfo.name}</h2>
             <p className="text-gray-500">{freelancerInfo.title}</p>
-            <p>{freelancerInfo.email}</p>
+            <p className="w-full wrap-break-word text-gray-500">
+              {freelancerInfo.email}
+            </p>
           </div>
         </div>
 

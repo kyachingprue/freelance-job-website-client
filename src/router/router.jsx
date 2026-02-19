@@ -36,6 +36,7 @@ import Notifications from "../components/notifications/Notifications";
 import ClientHireDetails from "../dashboard/client/ClientHireDetails";
 import AdminProfile from "../dashboard/admin/AdminProfile";
 import ClientAddWork from "../dashboard/client/ClientAddWork";
+import AdminEditJobs from "../dashboard/admin/AdminEditJobs";
 
 const router = createBrowserRouter([
   {
@@ -155,6 +156,10 @@ const router = createBrowserRouter([
       {
         path: 'admin-jobs',
         element: <AdminJobs/>
+      },
+      {
+        path: 'admin-job-edit/:id',
+        element: <AdminEditJobs/>
       },
       {
         path: 'admin-proposals',

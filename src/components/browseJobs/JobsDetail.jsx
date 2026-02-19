@@ -223,6 +223,7 @@ const JobsDetail = () => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex-1 space-y-2 text-sm text-gray-700">
               <p><strong>Name:</strong> {job.client?.name}</p>
+              <p><strong>Email:</strong> {job.client?.email}</p>
               <p><strong>Rating:</strong> ⭐ {job.client?.rating}</p>
               <p><strong>Total Jobs Posted:</strong> {job.client?.totalJobsPosted}</p>
             </div>
