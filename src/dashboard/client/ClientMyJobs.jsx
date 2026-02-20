@@ -156,24 +156,24 @@ const ClientMyJobs = () => {
             <tbody>
               {jobs.map((job) => (
                 <tr key={job._id} className="border-t hover:bg-sky-100 border-gray-400">
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-2">
                     <img className="w-10 h-9 rounded-md object-cover" src={job?.companyLogo} alt={job?.title} />
                   </td>
                   <td className="px-6 py-3">{job.title}</td>
                   <td className="px-6 py-3">
                     <span className="bg-blue-700/20 rounded-full py-1.5 px-4">{job.category}</span>
                   </td>
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-2">
                     {job.currency} {job.budget}
                   </td>
-                  <td className="px-6 py-3 text-green-600 font-medium">
+                  <td className="px-6 py-2 text-green-600 font-medium">
                     {job.status}
                   </td>
-                  <td className="py-3">
+                  <td className="py-2">
                     <div className="flex items-center gap-4">
 
                       {/* View Button */}
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-2">
                         <div className="flex items-center gap-3">
 
                           {/* View Button */}
@@ -202,7 +202,6 @@ const ClientMyJobs = () => {
                           >
                             Delete
                           </motion.button>
-
                         </div>
                       </td>
                     </div>

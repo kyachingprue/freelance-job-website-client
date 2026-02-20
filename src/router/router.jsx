@@ -37,6 +37,7 @@ import ClientHireDetails from "../dashboard/client/ClientHireDetails";
 import AdminProfile from "../dashboard/admin/AdminProfile";
 import ClientAddWork from "../dashboard/client/ClientAddWork";
 import AdminEditJobs from "../dashboard/admin/AdminEditJobs";
+import AdminRoleRequests from "../dashboard/admin/AdminRoleRequests";
 
 const router = createBrowserRouter([
   {
@@ -180,6 +181,10 @@ const router = createBrowserRouter([
       {
         path: 'admin-profile',
         element: <AdminProfile/>
+      },
+      {
+        path: 'admin-role-requests',
+        element: <AdminRoleRequests/>
       },
       {
         path: 'admin-settings',

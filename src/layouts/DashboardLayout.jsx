@@ -55,6 +55,7 @@ export default function DashboardLayout() {
       { name: "Categories", path: "/dashboard/admin-categories", icon: Folder },
       { name: "Reports", path: "/dashboard/admin-reports", icon: BarChart3 },
       { name: "Profile", path: "/dashboard/admin-profile", icon: UserRoundCog },
+      { name: "Role Requests", path: "/dashboard/admin-role-requests", icon: Settings },
       { name: "Setting", path: "/dashboard/admin-settings", icon: Settings },
     ],
   };
