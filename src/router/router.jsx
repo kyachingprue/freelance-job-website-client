@@ -38,6 +38,8 @@ import AdminProfile from "../dashboard/admin/AdminProfile";
 import ClientAddWork from "../dashboard/client/ClientAddWork";
 import AdminEditJobs from "../dashboard/admin/AdminEditJobs";
 import AdminRoleRequests from "../dashboard/admin/AdminRoleRequests";
+import FreelancerViewWorks from "../dashboard/freelancer/FreelancerViewWorks";
+import ClientViewSubmissions from "../dashboard/client/ClientViewSubmissions";
 
 const router = createBrowserRouter([
   {
@@ -93,6 +95,10 @@ const router = createBrowserRouter([
         element: <ActiveJobs/>
       },
       {
+        path: 'freelancer-view-work',
+        element: <FreelancerViewWorks/>
+      },
+      {
         path: 'freelancer-reviews',
         element: <FreelancerReviews/>
       },
@@ -128,6 +134,10 @@ const router = createBrowserRouter([
       {
         path: 'client-hire-freelancer',
         element: <ClientHireFreelancer/>
+      },
+      {
+        path: 'client-view-submissions/:hireId',
+        element: <ClientViewSubmissions/>
       },
       {
         path: "hire-details/:id",

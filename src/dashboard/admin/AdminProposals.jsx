@@ -41,18 +41,18 @@ const AdminProposals = () => {
   }
 
   return (
-    <div className="p-6">
-      <div className="bg-white shadow-2xl rounded-2xl p-6">
+    <div className="p-4 h-full lg:h-160 overflow-y-auto">
+      <div className="bg-white shadow-2xl rounded-2xl p-4">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           All Proposals
-        </h2>
+        </h2> 
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-xl">
           <table className="min-w-full">
             <thead>
               <tr className="bg-linear-to-r from-indigo-600 to-blue-600 text-white">
-                <th className="px-4 py-3 text-left">Job Title</th>
-                <th className="px-4 py-3 text-left">Freelancer</th>
+                <th className="px-4 py-2 text-left">Freelancer</th>
+                <th className="px-4 py-2 text-left">Job Title</th>
                 <th className="px-4 py-3 text-left">Client</th>
                 <th className="px-4 py-3 text-left">Bid</th>
                 <th className="px-4 py-3 text-left">Time</th>
@@ -65,21 +65,16 @@ const AdminProposals = () => {
               {proposals.map((proposal, index) => (
                 <tr
                   key={proposal._id}
-                  className={`border-b hover:bg-gray-50 transition duration-200 ${index % 2 === 0 ? "bg-gray-50/40" : ""
+                  className={`border-b border-blue-300 bg-gray-100 hover:bg-sky-100 transition duration-200 ${index % 2 === 0 ? "bg-gray-50/40" : ""
                     }`}
                 >
-                  {/* Job Title */}
-                  <td className="px-4 py-3 font-medium text-gray-700">
-                    {proposal.jobTitle}
-                  </td>
-
                   {/* Freelancer */}
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-2">
                     <div className="flex items-center gap-3">
                       <img
                         src={proposal.freelancerProfile}
                         alt="profile"
-                        className="w-10 h-10 rounded-full object-cover border"
+                        className="w-10 h-10 border-blue-400 rounded-full object-cover border"
                       />
                       <div>
                         <p className="font-semibold text-gray-700">
@@ -92,9 +87,14 @@ const AdminProposals = () => {
                     </div>
                   </td>
 
+                  {/* Job Title */}
+                  <td className="px-4 py-2 text-sm md:text-base font-medium text-gray-700">
+                    {proposal.jobTitle}
+                  </td>
+
                   {/* Client */}
-                  <td className="px-4 py-3">
-                    <p className="font-semibold text-gray-700">
+                  <td className="px-4 py-2">
+                    <p className="font-semibold text-sm text-gray-700">
                       {proposal.clientName}
                     </p>
                     <p className="text-sm text-gray-500">
@@ -103,25 +103,27 @@ const AdminProposals = () => {
                   </td>
 
                   {/* Bid */}
-                  <td className="px-4 py-3 font-semibold text-indigo-600">
-                    {proposal.currency} {proposal.bidAmount}
+                  <td className="px-4 py-2">
+                    <p className="font-semibold text-indigo-600 text-sm">
+                      {proposal.currency} {proposal.bidAmount}
+                    </p>
                     <p className="text-sm text-gray-500">
                       {proposal.budgetType}
                     </p>
                   </td>
 
                   {/* Time */}
-                  <td className="px-4 py-3 text-gray-600">
+                  <td className="px-4 py-2 text-gray-600">
                     {proposal.estimatedTime} days
                   </td>
 
                   {/* Date */}
-                  <td className="px-4 py-3 text-sm text-gray-500">
+                  <td className="px-4 py-2 text-sm text-gray-500">
                     {new Date(proposal.createdAt).toLocaleDateString()}
                   </td>
 
                   {/* Status */}
-                  <td className="px-4 py-3 text-center">
+                  <td className="px-4 py-2 text-center">
                     <span
                       className={`px-4 py-1 rounded-full text-sm font-semibold transition duration-300 ${getStatusStyle(
                         proposal.status

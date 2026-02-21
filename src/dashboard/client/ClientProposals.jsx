@@ -71,7 +71,7 @@ const ClientProposals = () => {
                   className="border-t border-gray-300 hover:bg-sky-50"
                 >
                   {/* Freelancer Info */}
-                  <td className="px-4 py-3 flex items-center gap-3">
+                  <td className="px-2 py-3 flex items-center gap-3">
                     <img
                       src={proposal.freelancerProfile || null}
                       alt={proposal.freelancerName}
@@ -88,29 +88,29 @@ const ClientProposals = () => {
                   </td>
 
                   {/* Job Title */}
-                  <td className="px-4 py-3">
-                    <span className="text-blue-950 bg-sky-500/15 rounded-full py-1.5 px-4">{proposal.jobTitle}</span>
+                  <td className="px-2 py-3">
+                    <span className="text-blue-950 text-start bg-sky-500/15 rounded-full py-1.5 px-2">{proposal.jobTitle}</span>
                   </td>
 
                   {/* Bid */}
-                  <td className="px-4 py-3 font-medium">
+                  <td className="px-2 py-3 font-medium">
                     ${proposal.bidAmount}
                   </td>
 
                   {/* Portfolio Link */}
-                  <td className="px-4 py-3 font-medium">
+                  <td className="px-2 py-3 font-medium">
                     <Link to={proposal.freelancerPortfolio} target='_blank' className="text-blue-500 hover:underline">
                       <p className="bg-blue-600/15 py-1.5 px-4 rounded-full">View Portfolio</p>
                     </Link>
                   </td>
 
                   {/* Estimated Time */}
-                  <td className="px-4 py-3">
+                  <td className="px-2 py-3">
                     {proposal.estimatedTime} days
                   </td>
 
                   {/* Status Dropdown */}
-                  <td className="px-4 py-3">
+                  <td className="px-2 py-3">
                     {proposal.status === "accepted" ? (
                       <span className="text-green-600 bg-green-600/20 px-4 py-1.5 rounded-full font-medium">
                         Accepted

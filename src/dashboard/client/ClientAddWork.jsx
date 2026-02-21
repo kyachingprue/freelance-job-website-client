@@ -8,6 +8,7 @@ import {
   MessageSquare,
   Send,
   ArrowLeft,
+  Calendar,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -30,7 +31,7 @@ const ClientAddWork = () => {
       const workData = {
         hireId: id,
         ...data,
-        status: "pending",
+        status: "in_progress",
         createdAt: new Date(),
       };
 
@@ -38,6 +39,7 @@ const ClientAddWork = () => {
 
       if (res.data.insertedId) {
         toast.success("Work assigned successfully 🚀");
+        navigate("/dashboard/client-hire-freelancer");
         reset();
       }
     } catch (error) {
@@ -72,7 +74,7 @@ const ClientAddWork = () => {
             <textarea
               rows="4"
               {...register("workDetails", { required: true })}
-              className="w-full p-3 rounded-xl border border-gray-400 focus:ring-2 
+              className="w-full p-3 rounded-md border border-gray-400 focus:ring-2 
                          focus:ring-blue-400 outline-none"
               placeholder="Explain complete project requirements..."
             />
@@ -91,13 +93,32 @@ const ClientAddWork = () => {
             <input
               type="url"
               {...register("figmaLink", { required: true })}
-              className="w-full p-3 rounded-xl border border-gray-400 focus:ring-2 
+              className="w-full p-3 rounded-md border border-gray-400 focus:ring-2 
                          focus:ring-blue-400 outline-none"
               placeholder="https://figma.com/..."
             />
             {errors.figmaLink && (
               <p className="text-red-500 text-sm mt-1">
                 Design link is required
+              </p>
+            )}
+          </div>
+
+          {/* Deadline */}
+          <div>
+            <label className="flex items-center gap-2 font-medium mb-2">
+              <Calendar size={18} /> DeadLine Date
+            </label>
+            <input
+              type="date"
+              {...register("deadline", { required: true })}
+              className="w-full p-3 rounded-md border border-gray-400 focus:ring-2 
+                         focus:ring-blue-400 outline-none"
+              placeholder="Select deadline date..."
+            />
+            {errors.deadline && (
+              <p className="text-red-500 text-sm mt-1">
+                deadline is required
               </p>
             )}
           </div>

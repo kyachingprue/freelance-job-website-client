@@ -1,11 +1,13 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { ArrowLeft } from "lucide-react";
 
 const ClientHireDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useQuery({
     queryKey: ["hireDetails", id],
@@ -27,8 +29,10 @@ const ClientHireDetails = () => {
 
       {/* Job Information */}
       <div className="bg-white shadow-md rounded-xl p-6 mb-6">
+        <button onClick={() => navigate(-1)}>
+          <ArrowLeft size={20} />
+        </button>
         <h2 className="text-2xl font-bold mb-4">Job Information</h2>
-
         <p><strong>Job Title:</strong> {hireInfo.jobTitle}</p>
         <p><strong>Hired At:</strong> {new Date(hireInfo.hiredAt).toLocaleDateString()}</p>
         <p><strong>Freelancer Email:</strong> {hireInfo.freelancerEmail}</p>

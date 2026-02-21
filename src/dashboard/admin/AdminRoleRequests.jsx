@@ -91,7 +91,7 @@ const AdminRoleRequests = () => {
                   <td className="py-4 rounded-r-xl">
                     <button
                       onClick={() => handleAccept(req)}
-                      disabled={req.requestRole !== "freelancer"}
+                      disabled={req.requestRole !== "client"}
                       className={`flex items-center justify-center gap-2 mx-auto px-5 py-2 rounded-full text-white font-semibold transition-all duration-300 shadow-md ${req.status === "pending"
                           ? "bg-linear-to-r from-green-500 to-emerald-600 hover:scale-110 hover:shadow-xl"
                           : "bg-gray-400 cursor-not-allowed"
