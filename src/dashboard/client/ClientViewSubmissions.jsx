@@ -8,15 +8,19 @@ import {
   Loader,
   Github,
   ArrowLeft,
+  DollarSign,
+  Star,
 } from "lucide-react";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const ClientViewSubmissions = () => {
   const axiosSecure = useAxiosSecure();
   const { jobId } = useParams();
   const navigate = useNavigate();
+  const [ratings, setRatings] = useState({});
 
   const { data: submissions = [], isLoading, refetch } = useQuery({
     queryKey: ["clientSubmissions", jobId],
@@ -58,10 +62,47 @@ const ClientViewSubmissions = () => {
     }
   };
 
+  const handleRatingSubmit = async (submission) => {
+    try {
+      if (!submission.clientRating || submission.clientRating < 1) {
+        return toast.error("Please select a rating!");
+      }
+
+      const res = await axiosSecure.patch("/freelancer-hires/add-rating", {
+        hireId: submission.hireId, // must exist in submission
+        rating: submission.clientRating,
+      });
+
+      if (res.data.success) {
+        toast.success("Rating submitted successfully!");
+        navigate("/dashboard/client-hire-freelancer");
+        refetch();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit rating");
+    }
+  };
+
+  const handlePayment = async (submission) => {
+    try {
+      const res = await axiosSecure.patch("/freelancer-hires/make-payment", {
+        hireId: submission.hireId,
+      });
+
+      if (res.data.success) {
+        toast.success("Payment Successful!");
+        refetch();
+      }
+    } catch (error) {
+      toast.error("Payment failed", error?.message);
+    }
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="p-6">
+    <div className="p-3 h-full lg:h-160 overflow-y-auto">
       {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
@@ -160,6 +201,65 @@ const ClientViewSubmissions = () => {
                 Submitted At:{" "}
                 {new Date(sub.submittedAt).toLocaleString()}
               </p>
+              {/* Rating & Payment Section */}
+              {sub.status === "completed" ? (
+                <div className="mt-4 space-y-3">
+
+                  {/* ⭐ Rating System */}
+                  <div>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">
+                      Give Rating:
+                    </p>
+
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          size={20}
+                          onClick={() =>
+                            setRatings({
+                              ...ratings,
+                              [sub._id]: star,
+                            })
+                          }
+                          className={`cursor-pointer transition ${star <= (ratings[sub._id] || 0)
+                              ? "text-yellow-400 fill-yellow-400"
+                              : "text-gray-300"
+                            }`}
+                        />
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        handleRatingSubmit({
+                          ...sub,
+                          clientRating: ratings[sub._id],
+                        })
+                      }
+                      disabled={!ratings[sub._id]}
+                      className="mt-2 bg-yellow-500 text-white px-4 py-1 rounded-lg hover:bg-yellow-600 transition disabled:bg-gray-400"
+                    >
+                      Submit Rating
+                    </button>
+                  </div>
+
+                  {/* 💰 Payment Button */}
+                  <button
+                    onClick={() => handlePayment(sub)}
+                    className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
+                  >
+                    <DollarSign size={18} />
+                    Pay Freelancer
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-4 opacity-50">
+                  <p className="text-sm text-gray-400 italic">
+                    Rating & Payment available after completion
+                  </p>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>

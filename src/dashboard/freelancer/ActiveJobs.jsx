@@ -14,6 +14,7 @@ import {
   Link as LinkIcon,
   Eye,
   User2,
+  Star,
 } from "lucide-react";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -109,7 +110,7 @@ const ActiveJobs = () => {
             <img
               src={job.companyLogo}
               alt="logo"
-              className="w-16 h-16 rounded-full mb-4 border-2 border-white"
+              className="w-16 h-16 rounded-full object-cover mb-4 border-2 border-white"
             />
 
             {/* Job Title */}
@@ -134,13 +135,48 @@ const ActiveJobs = () => {
               <Clock size={16} /> {job.estimatedTime} Days
             </p>
 
-            <p className="flex items-center gap-2 mt-2">
-              <CheckCircle size={16} /> Status: {job.status}
-            </p>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+              <div>
+                <p className="flex items-center gap-2 mt-2">
+                  <CheckCircle size={16} /> Status: {job.status}
+                </p>
 
-            <p className="text-sm mt-2">
-              Hired At: {new Date(job.hiredAt).toLocaleDateString()}
-            </p>
+                <p className="text-sm mt-2">
+                  Hired At: {new Date(job.hiredAt).toLocaleDateString()}
+                </p>
+              </div>
+              <div>
+                {/* Rating Section */}
+                <div className="mt-3">
+                  <p className="text-gray-200 text-sm md:text-base font-bold mb-1">
+                    Rating:
+                  </p>
+
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        size={18}
+                        className={`${star <= Math.round(job.rating || 0)
+                          ? "text-yellow-400 fill-yellow-400"
+                          : "text-gray-300"
+                          }`}
+                      />
+                    ))}
+
+                    <span className="ml-2 text-sm text-gray-100">
+                      {job.rating ? job.rating.toFixed(1) : "0.0"}
+                    </span>
+
+                    {job.totalReviews && (
+                      <span className="text-xs text-gray-500">
+                        ({job.totalReviews} reviews)
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Buttons */}
             <div className="flex justify-between mt-4">

@@ -24,7 +24,7 @@ const MyProposals = () => {
   if (isError) return <ErrorLoading />;
 
   return (
-    <div className="h-full md:h-150 overflow-y-auto p-2 bg-gray-200">
+    <div className="h-full lg:h-160 overflow-y-auto p-2 bg-gray-200">
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
         <h1 className="text-2xl font-bold p-6 border-b border-gray-200">
           My Proposals

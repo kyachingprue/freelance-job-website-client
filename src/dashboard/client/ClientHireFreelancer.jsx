@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { Star } from "lucide-react";
 
 const ClientHireFreelancer = () => {
   const { user } = useAuth();
@@ -61,29 +62,60 @@ const ClientHireFreelancer = () => {
                   </div>
                 </div>
 
-                {/* Job Info */}
-                <div className="mt-4 space-y-2">
-                  <p className="text-sm">
-                    <span className="text-sm md:text-base font-bold text-gray-700">Job:</span>{" "}
-                    <span className="text-blue-600 font-medium">
-                      {hire.jobTitle}
-                    </span>
-                  </p>
-
-                  <div className="flex flex-row items-center gap-2">
-                    <p className="text-sm font-bold text-gray-500">
-                      Hired At:
+                <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                  {/* Job Info */}
+                  <div className="mt-4 space-y-2">
+                    <p className="text-sm">
+                      <span className="text-sm md:text-base font-bold text-gray-700">Job:</span>{" "}
+                      <span className="text-blue-600 font-medium">
+                        {hire.jobTitle}
+                      </span>
                     </p>
-                    <span className="text-sm text-blue-500">{new Date(hire.hiredAt).toLocaleDateString()}</span>
-                  </div>
 
-                  {/* Status Badge */}
-                  <div className="flex flex-row items-center gap-2">
-                    <p className="text-gray-700 text-sm md:text-base font-bold">Status:</p>
-                    <span className="inline-block px-3 py-1.5 text-xs rounded-full 
+                    <div className="flex flex-row items-center gap-2">
+                      <p className="text-sm font-bold text-gray-500">
+                        Hired At:
+                      </p>
+                      <span className="text-sm text-blue-500">{new Date(hire.hiredAt).toLocaleDateString()}</span>
+                    </div>
+
+                    {/* Status Badge */}
+                    <div className="flex flex-row items-center gap-2">
+                      <p className="text-gray-700 text-sm md:text-base font-bold">Status:</p>
+                      <span className="inline-block px-3 py-1.5 text-xs rounded-full 
                          bg-green-100 text-green-700 font-medium">
-                      {hire.status || "In Progress"}
-                    </span>
+                        {hire.status || "In Progress"}
+                      </span>
+                    </div>
+                  </div>
+                  {/* Rating Section */}
+                  <div className="mt-3">
+                    <p className="text-gray-700 text-sm md:text-base font-bold mb-1">
+                      Rating:
+                    </p>
+
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          size={18}
+                          className={`${star <= Math.round(hire.rating || 0)
+                              ? "text-yellow-400 fill-yellow-400"
+                              : "text-gray-300"
+                            }`}
+                        />
+                      ))}
+
+                      <span className="ml-2 text-sm text-gray-600">
+                        {hire.rating ? hire.rating.toFixed(1) : "0.0"}
+                      </span>
+
+                      {hire.totalReviews && (
+                        <span className="text-xs text-gray-500">
+                          ({hire.totalReviews} reviews)
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 

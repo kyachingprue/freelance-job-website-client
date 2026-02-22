@@ -29,8 +29,8 @@ const ClientHireDetails = () => {
 
       {/* Job Information */}
       <div className="bg-white shadow-md rounded-xl p-6 mb-6">
-        <button onClick={() => navigate(-1)}>
-          <ArrowLeft size={20} />
+        <button onClick={() => navigate(-1)} className="flex flex-row hover:text-blue-600 items-center mb-4 gap-2">
+          <ArrowLeft size={20} /> <span className=" hover:underline">back</span>
         </button>
         <h2 className="text-2xl font-bold mb-4">Job Information</h2>
         <p><strong>Job Title:</strong> {hireInfo.jobTitle}</p>

@@ -156,6 +156,7 @@ const FreelancerProfileSetting = () => {
       await axiosSecure.post("/role-request", {
         userId: dbUser._id.toString(),
         userEmail: firebaseUser?.email,
+        userProfile: dbUser?.photoURL || "",
         currentRole: dbUser.role,
         requestRole: "client",
       });

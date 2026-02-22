@@ -36,11 +36,11 @@ const AdminRoleRequests = () => {
   };
 
   return (
-    <div className="h-full md:h-160 overflow-y-auto">
+    <div className="h-full lg:h-160 overflow-y-auto">
 
-      <div className="w-full max-w-6xl bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/40">
+      <div className="w-full max-w-6xl bg-sky-500/15 backdrop-blur-lg shadow-2xl rounded-3xl p-6 border border-white/40">
 
-        <h2 className="text-2xl font-bold text-center mb-6 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h2 className="text-2xl font-bold text-center mb-6 bg-linear-to-r from-blue-900 to-purple-900 bg-clip-text text-transparent">
           Role Requests Management
         </h2>
 
@@ -50,11 +50,12 @@ const AdminRoleRequests = () => {
             {/* Table Head */}
             <thead>
               <tr className="bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-xl">
-                <th className="py-4 rounded-l-xl">Email</th>
-                <th className="py-4">Current Role</th>
-                <th className="py-4">Requested Role</th>
-                <th className="py-4">Status</th>
-                <th className="py-4 rounded-r-xl">Role Setup</th>
+                <th className="py-4 rounded-l-xl uppercase">Profile</th>
+                <th className="py-4 uppercase">Email</th>
+                <th className="py-4 uppercase">Current Role</th>
+                <th className="py-4 uppercase">Requested Role</th>
+                <th className="py-4 uppercase">Status</th>
+                <th className="py-4 rounded-r-xl uppercase">Role Setup</th>
               </tr>
             </thead>
 
@@ -65,12 +66,15 @@ const AdminRoleRequests = () => {
                   key={req._id}
                   className="bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-xl"
                 >
-                  <td className="py-4 rounded-l-xl font-medium text-gray-700">
+                  <td className="py-4 px-3 rounded-l-xl ">
+                    <img src={req.userProfile} alt="Profile" className="w-12 h-12 rounded-full object-cover" />
+                  </td>
+                  <td className="py-4 font-medium text-gray-700">
                     {req.userEmail}
                   </td>
 
-                  <td className="py-4 capitalize text-gray-600">
-                    {req.currentRole}
+                  <td className="py-4 capitalize text-gray-700">
+                    <span className="py-1.5 px-4 rounded-full bg-pink-500/20">{req.currentRole}</span>
                   </td>
 
                   <td className="py-4 capitalize text-gray-600 font-semibold">

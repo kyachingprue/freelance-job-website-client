@@ -52,7 +52,6 @@ export default function DashboardLayout() {
       { name: "Jobs", path: "/dashboard/admin-jobs", icon: Briefcase },
       { name: "Proposals", path: "/dashboard/admin-proposals", icon: FileText },
       { name: "Payments", path: "/dashboard/admin-payments", icon: CreditCard },
-      { name: "Categories", path: "/dashboard/admin-categories", icon: Folder },
       { name: "Reports", path: "/dashboard/admin-reports", icon: BarChart3 },
       { name: "Profile", path: "/dashboard/admin-profile", icon: UserRoundCog },
       { name: "Role Requests", path: "/dashboard/admin-role-requests", icon: Settings },

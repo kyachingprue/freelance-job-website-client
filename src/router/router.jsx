@@ -27,7 +27,6 @@ import AdminUsers from "../dashboard/admin/AdminUsers";
 import AdminJobs from "../dashboard/admin/AdminJobs";
 import AdminProposals from "../dashboard/admin/AdminProposals";
 import AdminPayments from "../dashboard/admin/AdminPayments";
-import AdminCategories from "../dashboard/admin/AdminCategories";
 import AdminReports from "../dashboard/admin/AdminReports";
 import AdminSettings from "../dashboard/admin/AdminSettings";
 import ClientMyJobs from "../dashboard/client/ClientMyJobs";
@@ -179,10 +178,6 @@ const router = createBrowserRouter([
       {
         path: 'admin-payments',
         element: <AdminPayments/>
-      },
-      {
-        path: 'admin-categories',
-        element: <AdminCategories/>
       },
       {
         path: 'admin-reports',
