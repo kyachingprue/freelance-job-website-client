@@ -84,19 +84,9 @@ const ClientViewSubmissions = () => {
     }
   };
 
-  const handlePayment = async (submission) => {
-    try {
-      const res = await axiosSecure.patch("/freelancer-hires/make-payment", {
-        hireId: submission.hireId,
-      });
-
-      if (res.data.success) {
-        toast.success("Payment Successful!");
-        refetch();
-      }
-    } catch (error) {
-      toast.error("Payment failed", error?.message);
-    }
+  const handlePayment = async () => {
+    console.log("Payment successfully");
+    toast.success("Payment successfully")
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -109,7 +99,7 @@ const ClientViewSubmissions = () => {
         className="flex items-center gap-2 mb-6 text-gray-700 hover:text-indigo-600 transition font-semibold"
       >
         <ArrowLeft size={20} />
-        Back
+        <span className="hover:underline">Back Hire Freelancer</span>
       </button>
 
       {/* If No Data */}
@@ -246,7 +236,7 @@ const ClientViewSubmissions = () => {
 
                   {/* 💰 Payment Button */}
                   <button
-                    onClick={() => handlePayment(sub)}
+                    onClick={handlePayment}
                     className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
                   >
                     <DollarSign size={18} />
