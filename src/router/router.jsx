@@ -136,7 +136,7 @@ const router = createBrowserRouter([
         element: <ClientHireFreelancer/>
       },
       {
-        path: 'client-view-submissions/:hireId',
+        path: 'client-view-submissions/:jobId',
         element: <ClientViewSubmissions/>
       },
       {

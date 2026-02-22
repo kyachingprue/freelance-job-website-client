@@ -52,7 +52,7 @@ const ActiveJobs = () => {
     try {
       const submissionData = {
         ...data,
-        jobId: selectedJob.jobId,
+        hireId: selectedJob._id, 
         freelancerEmail: user.email,
         clientEmail: selectedJob.clientEmail,
         status: "submitted",

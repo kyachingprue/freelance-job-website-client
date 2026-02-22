@@ -112,9 +112,9 @@ const ClientHireFreelancer = () => {
                   </button>
                   <button
                     onClick={() =>
-                      navigate(`/dashboard/client-view-submissions/${hire.clientEmail}`)
+                      navigate(`/dashboard/client-view-submissions/${hire._id}`)
                     }
-                    className="flex-1 text-white hover:bg-sky-900 bg-sky-700 py-2 rounded-xl text-sm font-medium transition"
+                    className="flex-1 text-white bg-linear-to-r from-blue-950 to-pink-900 py-2 rounded-xl text-sm font-medium transition"
                   >
                     View Submissions
                   </button>
