@@ -19,7 +19,7 @@ const Notifications = () => {
   });
 
   return (
-    <section className="bg-sky-50">
+    <section className="bg-gray-200">
       <div className="max-w-5xl min-h-screen mx-auto py-24 px-4">
         <h2 className="text-2xl font-bold mb-6">All Notifications</h2>
 
@@ -29,7 +29,7 @@ const Notifications = () => {
               key={noti._id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`p-4 rounded-xl shadow-sm ${noti.status === "unread"
+              className={`p-4 hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl shadow-sm ${noti.status === "unread"
                 ? "bg-blue-50 border-l-4 border-blue-500"
                 : "bg-white"
                 }`}

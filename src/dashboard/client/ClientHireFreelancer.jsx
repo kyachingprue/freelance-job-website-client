@@ -15,7 +15,7 @@ const ClientHireFreelancer = () => {
     queryKey: ["clientHires", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/hires/${user.email}`);
+      const res = await axiosSecure.get(`/hires/email/${user.email}`);
       return res.data;
     },
   });

@@ -20,7 +20,6 @@ import FreelancerProfileSetting from "../dashboard/freelancer/FreelancerProfileS
 import ClientDashboard from "../dashboard/client/ClientDashboard";
 import ClientProposals from "../dashboard/client/ClientProposals";
 import ClientHireFreelancer from "../dashboard/client/ClientHireFreelancer";
-import ClientPayments from "../dashboard/client/ClientPayments";
 import ClientProfile from "../dashboard/client/ClientProfile";
 import AdminDashboard from "../dashboard/admin/AdminDashboard";
 import AdminUsers from "../dashboard/admin/AdminUsers";
@@ -39,6 +38,12 @@ import AdminEditJobs from "../dashboard/admin/AdminEditJobs";
 import AdminRoleRequests from "../dashboard/admin/AdminRoleRequests";
 import FreelancerViewWorks from "../dashboard/freelancer/FreelancerViewWorks";
 import ClientViewSubmissions from "../dashboard/client/ClientViewSubmissions";
+import PrivateRoute from "./PrivateRoute";
+import FreelancerRoute from "./FreelancerRoute";
+import ClientRoute from "./ClientRoute";
+import AdminRoute from "./AdminRoute";
+import ClientPaymentHistory from "../dashboard/client/ClientPaymentHistory";
+import ClientPayment from "../dashboard/client/ClientPayment";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'browse-jobs',
-        element: <BrowseJobs/>
+        element:<BrowseJobs />
       },
       {
         path: 'job-details/:id',
@@ -72,128 +77,132 @@ const router = createBrowserRouter([
       },
       {
         path: 'notifications',
-        element: <Notifications/>
+        element: <PrivateRoute><Notifications /></PrivateRoute>
       }
     ]
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       // Freelancer Dashboard
       {
         path: 'freelancer-dashboard',
-        element:<FreelancerDashboard/>
+        element: <FreelancerRoute><FreelancerDashboard /></FreelancerRoute>
       },
       {
         path: 'freelancer-proposals',
-        element: <MyProposals/>
+        element: <FreelancerRoute><MyProposals /></FreelancerRoute>
       },
       {
         path: 'freelancer-active-jobs',
-        element: <ActiveJobs/>
+        element: <FreelancerRoute><ActiveJobs /></FreelancerRoute>
       },
       {
         path: 'freelancer-view-work',
-        element: <FreelancerViewWorks/>
+        element: <FreelancerRoute><FreelancerViewWorks /></FreelancerRoute>
       },
       {
         path: 'freelancer-reviews',
-        element: <FreelancerReviews/>
+        element: <FreelancerRoute><FreelancerReviews /></FreelancerRoute>
       },
       {
         path: "freelancer-notifications",
-        element: <FreelancerNotifications/>
+        element: <FreelancerRoute><FreelancerNotifications /></FreelancerRoute>
       },
       {
         path: 'freelancer-earnings',
-        element: <FreelancerEarnings/>
+        element: <FreelancerRoute><FreelancerEarnings /></FreelancerRoute>
       },
       {
         path: 'freelancer-profile-setting',
-        element: <FreelancerProfileSetting/>
+        element: <FreelancerRoute><FreelancerProfileSetting /></FreelancerRoute>
       },
       // Client Dashboard
       {
         path: 'client-dashboard',
-        element: <ClientDashboard/>
+        element: <ClientRoute><ClientDashboard /></ClientRoute>
       },
       {
         path: 'client-my-jobs',
-        element: <ClientMyJobs/>
+        element: <ClientRoute><ClientMyJobs /></ClientRoute>
       },
       {
         path: 'client-notifications',
-        element: <ClientNotifications/>
+        element: <ClientRoute><ClientNotifications /></ClientRoute>
       },
       {
         path: 'client-proposals',
-        element: <ClientProposals/>
+        element: <ClientRoute><ClientProposals /></ClientRoute>
       },
       {
         path: 'client-hire-freelancer',
-        element: <ClientHireFreelancer/>
+        element: <ClientRoute><ClientHireFreelancer /></ClientRoute>
       },
       {
         path: 'client-view-submissions/:jobId',
-        element: <ClientViewSubmissions/>
+        element: <ClientRoute><ClientViewSubmissions /></ClientRoute>
       },
       {
         path: "hire-details/:id",
-        element: <ClientHireDetails/>
+        element: <ClientRoute><ClientHireDetails /></ClientRoute>
       },
       {
         path: "add-work/:id",
-        element: <ClientAddWork/>
+        element: <ClientRoute><ClientAddWork /></ClientRoute>
       },
       {
-        path: 'client-payments',
-        element: <ClientPayments/>
+        path: 'client-payment-history',
+        element: <ClientRoute><ClientPaymentHistory /></ClientRoute>
+      },
+      {
+        path: 'client-payment/:hireId',
+        element: <ClientPayment/>
       },
       {
         path: 'client-profile',
-        element: <ClientProfile/>
+        element: <ClientRoute><ClientProfile /></ClientRoute>
       },
       //Admin Dashboard
       {
         path: 'admin-dashboard',
-        element: <AdminDashboard/>
+        element: <AdminRoute><AdminDashboard /></AdminRoute>
       },
       {
         path: 'admin-users',
-        element: <AdminUsers/>
+        element: <AdminRoute><AdminUsers /></AdminRoute>
       },
       {
         path: 'admin-jobs',
-        element: <AdminJobs/>
+        element: <AdminRoute><AdminJobs /></AdminRoute>
       },
       {
         path: 'admin-job-edit/:id',
-        element: <AdminEditJobs/>
+        element: <AdminRoute><AdminEditJobs /></AdminRoute>
       },
       {
         path: 'admin-proposals',
-        element: <AdminProposals/>
+        element: <AdminRoute><AdminProposals /></AdminRoute>
       },
       {
         path: 'admin-payments',
-        element: <AdminPayments/>
+        element: <AdminRoute><AdminPayments /></AdminRoute>
       },
       {
         path: 'admin-reports',
-        element: <AdminReports/>
+        element: <AdminRoute><AdminReports /></AdminRoute>
       },
       {
         path: 'admin-profile',
-        element: <AdminProfile/>
+        element: <AdminRoute><AdminProfile /></AdminRoute>
       },
       {
         path: 'admin-role-requests',
-        element: <AdminRoleRequests/>
+        element: <AdminRoute><AdminRoleRequests /></AdminRoute>
       },
       {
         path: 'admin-settings',
-        element: <AdminSettings/>
+        element: <AdminRoute><AdminSettings /></AdminRoute>
       }
     ]
   },

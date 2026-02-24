@@ -42,7 +42,7 @@ export default function DashboardLayout() {
       { name: "My Jobs", path: "/dashboard/client-my-jobs", icon: Briefcase },
       { name: "Proposals", path: "/dashboard/client-proposals", icon: FileText },
       { name: "Hire Freelancer", path: "/dashboard/client-hire-freelancer", icon: Users },
-      { name: "Payments", path: "/dashboard/client-payments", icon: CreditCard },
+      { name: "Payment History", path: "/dashboard/client-payment-history", icon: CreditCard },
       { name: "Notifications", path: "/dashboard/client-notifications", icon: PlusCircle },
       { name: "Profile", path: "/dashboard/client-profile", icon: User },
     ],

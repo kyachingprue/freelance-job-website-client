@@ -84,9 +84,9 @@ const ClientViewSubmissions = () => {
     }
   };
 
-  const handlePayment = async () => {
-    console.log("Payment successfully");
+  const handlePayment = (hireId) => {
     toast.success("Payment successfully")
+    navigate(`/dashboard/client-payment/${hireId}`)
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -236,7 +236,7 @@ const ClientViewSubmissions = () => {
 
                   {/* 💰 Payment Button */}
                   <button
-                    onClick={handlePayment}
+                    onClick={() =>handlePayment(sub.hireId)}
                     className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
                   >
                     <DollarSign size={18} />
