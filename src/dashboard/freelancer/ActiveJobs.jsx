@@ -34,7 +34,7 @@ const ActiveJobs = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/hires/${user.email}`
+        `/hires/email/${user.email}`
       );
       return res.data;
     },
@@ -57,6 +57,7 @@ const ActiveJobs = () => {
         freelancerEmail: user.email,
         clientEmail: selectedJob.clientEmail,
         status: "submitted",
+        payment_status: "pending",
         submittedAt: new Date(),
       };
 

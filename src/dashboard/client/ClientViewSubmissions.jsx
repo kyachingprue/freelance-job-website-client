@@ -10,6 +10,8 @@ import {
   ArrowLeft,
   DollarSign,
   Star,
+  CheckCircle2,
+  Clock,
 } from "lucide-react";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useParams, useNavigate } from "react-router-dom";
@@ -85,8 +87,53 @@ const ClientViewSubmissions = () => {
   };
 
   const handlePayment = (hireId) => {
-    toast.success("Payment successfully")
     navigate(`/dashboard/client-payment/${hireId}`)
+  };
+
+  const handleDelete = (submissionId) => {
+    // 1️⃣ Show custom confirmation toast
+     toast(
+      (t) => (
+        <div className="flex flex-col gap-2 p-3">
+          <p className="font-semibold text-gray-700">
+            Are you sure you want to delete this submission?
+          </p>
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="px-3 py-1 rounded bg-gray-300 text-gray-800 hover:bg-gray-400 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  // Call server DELETE endpoint
+                  const res = await axiosSecure.delete(`/work-submissions/${submissionId}`);
+                  if (res.data.success) {
+                    toast.success("Submission deleted successfully ✅");
+                    refetch(); // refresh your data
+                    toast.dismiss(t.id);
+                  } else {
+                    toast.error("Failed to delete submission ❌");
+                  }
+                } catch (err) {
+                  console.error("Delete error:", err);
+                  toast.error("Something went wrong while deleting ❌");
+                }
+              }}
+              className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        duration: Infinity, // keep toast open until user clicks a button
+        position: "top-center",
+      }
+    );
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -191,65 +238,116 @@ const ClientViewSubmissions = () => {
                 Submitted At:{" "}
                 {new Date(sub.submittedAt).toLocaleString()}
               </p>
-              {/* Rating & Payment Section */}
-              {sub.status === "completed" ? (
-                <div className="mt-4 space-y-3">
+              <div className="flex flex-col lg:flex-row justify-between items-center">
+                <div className="w-full">
+                  {/* Rating & Payment Section */}
+                  {sub.status === "completed" ? (
+                    <div className="mt-4 space-y-3">
 
-                  {/* ⭐ Rating System */}
-                  <div>
-                    <p className="text-sm font-semibold text-gray-700 mb-1">
-                      Give Rating:
-                    </p>
+                      {/* ⭐ Rating System */}
+                      <div>
+                        <p className="text-sm font-semibold text-gray-700 mb-1">
+                          Give Rating:
+                        </p>
 
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          size={20}
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              size={20}
+                              onClick={() =>
+                                setRatings({
+                                  ...ratings,
+                                  [sub._id]: star,
+                                })
+                              }
+                              className={`cursor-pointer transition ${star <= (ratings[sub._id] || 0)
+                                ? "text-yellow-400 fill-yellow-400"
+                                : "text-gray-300"
+                                }`}
+                            />
+                          ))}
+                        </div>
+
+                        <button
                           onClick={() =>
-                            setRatings({
-                              ...ratings,
-                              [sub._id]: star,
+                            handleRatingSubmit({
+                              ...sub,
+                              clientRating: ratings[sub._id],
                             })
                           }
-                          className={`cursor-pointer transition ${star <= (ratings[sub._id] || 0)
-                              ? "text-yellow-400 fill-yellow-400"
-                              : "text-gray-300"
-                            }`}
-                        />
-                      ))}
+                          disabled={!ratings[sub._id]}
+                          className="mt-2 bg-yellow-500 text-white px-4 py-1 rounded-lg hover:bg-yellow-600 transition disabled:bg-gray-400"
+                        >
+                          Submit Rating
+                        </button>
+                      </div>
+
+                      {/* 💰 Payment Button */}
+                      <button
+                        onClick={() => handlePayment(sub.hireId)}
+                        disabled={sub.payment_status?.trim().toLowerCase() === "paid"}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition
+                        ${sub.payment_status?.trim().toLowerCase() === "paid"
+                            ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                            : "bg-emerald-600 text-white hover:bg-emerald-700"
+                          }`}
+                      >
+                        <DollarSign size={18} />
+                        Pay Freelancer
+                      </button>
                     </div>
-
-                    <button
-                      onClick={() =>
-                        handleRatingSubmit({
-                          ...sub,
-                          clientRating: ratings[sub._id],
-                        })
-                      }
-                      disabled={!ratings[sub._id]}
-                      className="mt-2 bg-yellow-500 text-white px-4 py-1 rounded-lg hover:bg-yellow-600 transition disabled:bg-gray-400"
-                    >
-                      Submit Rating
-                    </button>
-                  </div>
-
-                  {/* 💰 Payment Button */}
-                  <button
-                    onClick={() =>handlePayment(sub.hireId)}
-                    className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
-                  >
-                    <DollarSign size={18} />
-                    Pay Freelancer
-                  </button>
+                  ) : (
+                    <div className="mt-4 opacity-50">
+                      <p className="text-sm text-gray-400 italic">
+                        Rating & Payment available after completion
+                      </p>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="mt-4 opacity-50">
-                  <p className="text-sm text-gray-400 italic">
-                    Rating & Payment available after completion
+                <motion.div
+                  className="flex flex-col items-center justify-center gap-1 font-semibold"
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {sub.payment_status === "paid" ? (
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="text-green-500 animate-bounce" size={20} />
+                      <span className="text-green-600 uppercase">Paid</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Clock className="text-yellow-500 animate-pulse" size={20} />
+                      <span className="text-yellow-600 uppercase">Pending</span>
+                    </div>
+                  )}
+
+                  {/* Meaningful text below the status */}
+                  <p className={`text-sm text-center ${sub.payment_status === "paid" ? "text-green-500" : "text-yellow-500"}`}>
+                    {sub.payment_status === "paid"
+                      ? "Payment completed successfully ✅"
+                      : "Payment is pending. Waiting for confirmation ⏳"}
                   </p>
-                </div>
-              )}
+
+                  {/* Delete button */}
+                  {sub.payment_status === "paid" ? (
+                    <button
+                      onClick={() => handleDelete(sub._id)}
+                      className="mt-2 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
+                    >
+                      Delete Work
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="mt-2 bg-gray-400 text-white px-3 py-1 rounded-lg cursor-not-allowed"
+                    >
+                      Delete Work
+                    </button>
+                  )}
+                </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>

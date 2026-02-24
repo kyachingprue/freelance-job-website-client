@@ -24,8 +24,8 @@ const MyProposals = () => {
   if (isError) return <ErrorLoading />;
 
   return (
-    <div className="h-full lg:h-160 overflow-y-auto p-2 bg-gray-200">
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden">
+    <div>
+      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl h-full lg:h-160 overflow-y-auto p-2">
         <h1 className="text-2xl font-bold p-6 border-b border-gray-200">
           My Proposals
         </h1>
@@ -63,8 +63,8 @@ const MyProposals = () => {
         ) : (
           /* ✅ Show Table If Data Exists */
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="w-full rounded-xl">
+              <thead className="bg-gray-600">
                 <tr>
                   {[
                     "Image",
@@ -77,7 +77,7 @@ const MyProposals = () => {
                   ].map((header) => (
                     <th
                       key={header}
-                      className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-sm font-medium text-gray-50 uppercase tracking-wider"
                     >
                       {header}
                     </th>
@@ -89,7 +89,7 @@ const MyProposals = () => {
                 {proposals.map((proposal) => (
                   <tr
                     key={proposal._id}
-                    className="bg-white hover:bg-sky-100 "
+                    className="bg-white hover:bg-sky-200 border-b border-gray-300 "
                   >
                     <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                       <img

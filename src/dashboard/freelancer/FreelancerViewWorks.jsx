@@ -47,7 +47,7 @@ const FreelancerViewWorks = () => {
                 <img
                   src={work.hireInfo?.companyLogo}
                   alt="logo"
-                  className="w-16 h-16 rounded-full mb-4 border-2 border-white"
+                  className="w-16 h-16 object-cover rounded-full mb-4 border-2 border-white"
                 />
 
                 {/* Job Title */}

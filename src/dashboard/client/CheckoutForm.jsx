@@ -1,5 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { CreditCard, Landmark, Globe } from "lucide-react";
@@ -7,12 +7,15 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import useAuth from "../../hooks/useAuth";
 
 const CheckoutForm = () => {
+  const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
   const { hireId } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [cardError, setCardError] = useState("");
 
@@ -26,6 +29,7 @@ const CheckoutForm = () => {
   });
 
   const bidAmount = freelancerData?.hireInfo?.bidAmount || 0;
+  const amountIncents = bidAmount * 100;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,29 +42,69 @@ const CheckoutForm = () => {
     try {
       setLoading(true);
 
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card,
+      // 1️⃣ Create payment intent
+      const res = await axiosSecure.post("/create-payment-intent", {
+        amountIncents,
+        hireId,
       });
 
-      if (error) {
-        toast.error(error.message);
-        setLoading(false);
+      const clientSecret = res.data.clientSecret;
+
+      // 2️⃣ Confirm payment
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card,
+          billing_details: {
+            name: user?.displayName || "Anonymous",
+            email: user?.email || "unknown@example.com",
+          },
+        },
+      });
+
+      if (result.error) {
+        toast.error(result.error.message);
         return;
       }
 
-      console.log("PaymentMethod:", paymentMethod);
+      if (result.paymentIntent?.status === "succeeded") {
+        // 3️⃣ Save payment in DB
+        const paymentData = {
+          hireId,
+          amount: bidAmount,
+          email: user?.email,
+          transactionId: result.paymentIntent.id,
+          paymentMethod: result.paymentIntent.payment_method_types[0],
+        };
 
-      // 👉 Call backend here for real payment confirmation
+        const paymentRes = await axiosSecure.post("/payments", paymentData);
 
-      toast.success("Payment Successful 🎉");
+        if (!paymentRes.data.insertedId) {
+          toast.error("Payment saved failed in database");
+          return;
+        }
 
-      // ✅ CLEAR CARD INPUT
-      card.clear();
-      setCardError("");
+        // 4️⃣ Create notification for freelancer
+        const workSubmission = await axiosSecure.get(`/work-submissions/${hireId}`);
+        const freelancerEmail = workSubmission.data.freelancerEmail;
 
+        if (freelancerEmail) {
+          await axiosSecure.post("/notifications", {
+            receiverEmail: freelancerEmail,
+            message: `You have received payment for your completed work (Hire ID: ${hireId}) 🎉`,
+            status: "unread",
+            createdAt: new Date(),
+          });
+        }
+
+        // 5️⃣ Success feedback
+        toast.success("Payment Succeeded and Freelancer Notified! 🎉");
+        card.clear();
+        setCardError("");
+        navigate("/dashboard/client-payment-history");
+      }
     } catch (err) {
-      toast.error(err?.message);
+      console.error("Payment error:", err);
+      toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
