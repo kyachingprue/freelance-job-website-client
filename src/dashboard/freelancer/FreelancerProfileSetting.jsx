@@ -180,40 +180,55 @@ const FreelancerProfileSetting = () => {
     return <LoadingSpinner />;
   }
 
-  const handleResumeUpload = async (file) => {
-    if (!file || !dbUser?._id) return;
+  const handleResumeUpload = async (e) => {
+    e.preventDefault();
+    if (!dbUser?._id) return;
 
     setLoading(true);
 
     try {
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-      const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+      let resumeUrl = resumeURL; // keep existing URL if no new file
 
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", uploadPreset);
+      // Upload resume only if user selected a new file
+      if (formData.resume instanceof File) {
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+        const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
-      // Upload to Cloudinary
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-        method: "POST",
-        body: data,
-      });
+        const data = new FormData();
+        data.append("file", formData.resume);
+        data.append("upload_preset", uploadPreset);
 
-      if (!res.ok) throw new Error("Resume upload failed");
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+          method: "POST",
+          body: data,
+        });
 
-      const resData = await res.json();
+        if (!res.ok) throw new Error("Resume upload failed");
 
-      // Update backend with resume URL
-      await axiosSecure.patch(`/users/${dbUser._id}`, {
-        resume: resData.secure_url,
-      });
+        const resData = await res.json();
+        resumeUrl = resData.secure_url; // update URL to save in DB
+        setResumeURL(resumeUrl);
+      }
 
-      setResumeURL(resData.secure_url);
-      toast.success("Resume uploaded successfully!");
+      // Prepare updated user data
+      const updatedData = {
+        title: formData.title,
+        skills: formData.skills.split(",").map((s) => s.trim()).filter(Boolean),
+        github: formData.github,
+        linkedin: formData.linkedin,
+        description: formData.description,
+        resume: resumeUrl, // save the uploaded resume URL
+      };
+
+      // PATCH request to update user profile
+      await axiosSecure.patch(`/users/${dbUser._id}`, updatedData);
+
+      toast.success("Profile updated successfully 🚀");
+      setShowForm(false);
       refetch();
     } catch (err) {
       console.error(err);
-      toast.error(err.message || "Resume upload failed");
+      toast.error(err.response?.data?.message || err.message || "Update failed");
     } finally {
       setLoading(false);
     }
@@ -322,28 +337,37 @@ const FreelancerProfileSetting = () => {
               <h2 className="text-lg text-black font-semibold">Description</h2>
               <p className="text-gray-500">{dbUser?.description || "No description yet"}</p>
             </div>
-            <p>
-              Resume:{" "}
-              {resumeURL ? (
-                <a
-                  href={resumeURL + "?fl=attachment"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  View Resume
-                </a>
-              ) : (
-                "No resume uploaded"
-              )}
-            </p>
-            {resumeURL && (<a
-              href={resumeURL}
-              download
-              className="text-blue-500 underline"
-            >
-              Download Resume
-            </a>)}
+            {/* Resume upload */}
+            {resumeURL ? (
+              <a
+                href={resumeURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center max-w-6/12 justify-between bg-lime-200 hover:bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 mt-2 transition shadow-sm group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-300 text-red-600 p-2 rounded-lg">
+                    📄
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-800 group-hover:text-blue-600 transition">
+                      {resumeURL.split("/").pop()}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Click to view or download
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-blue-500 font-semibold text-sm">
+                  Open
+                </div>
+              </a>
+            ) : (
+              <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl px-4 py-3 mt-2 text-gray-400">
+                No resume uploaded
+              </div>
+            )}
           </div>
           {/* 2️⃣ Right side button */}
           <div>
@@ -424,14 +448,14 @@ const FreelancerProfileSetting = () => {
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
-                    className="px-3 py-1 border border-gray-300 rounded"
+                    className="px-3 py-1 border border-gray-300 hover:bg-red-700 hover:text-white rounded"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={loading} // disable when loading
-                    className={`px-3 py-1 rounded text-white ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+                    className={`px-4 py-1 rounded text-white ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"
                       }`}
                   >
                     {loading ? "Saving..." : "Save"}

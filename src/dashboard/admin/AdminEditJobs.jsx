@@ -20,10 +20,10 @@ const AdminEditJobs = () => {
   const { data: jobData, isLoading } = useQuery({
     queryKey: ["adminJob", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/jobs/${id}`);
+      const res = await axiosSecure.get(`/jobs/admin/${id}`);
       return res.data;
     },
-    onSuccess: (data) => setFormData(data), // input fields কে populate করবে
+    onSuccess: (data) => setFormData(data), 
   });
 
   // Update job mutation

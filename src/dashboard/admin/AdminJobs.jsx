@@ -5,6 +5,7 @@ import { Eye, Pencil, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const AdminJobs = () => {
   const axiosSecure = useAxiosSecure();
@@ -13,7 +14,7 @@ const AdminJobs = () => {
   const navigate = useNavigate();
 
   // ✅ Fetch Jobs using TanStack Query
-  const { data: jobs = [], refetch } = useQuery({
+  const { data: jobs = [], isLoading, refetch } = useQuery({
     queryKey: ["adminJobs"],
     queryFn: async () => {
       const res = await axiosSecure.get("/jobs");
@@ -56,6 +57,10 @@ const AdminJobs = () => {
       </div>
     ));
   };
+
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
 
   return (
     <motion.div

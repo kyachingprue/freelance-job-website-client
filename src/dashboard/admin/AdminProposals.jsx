@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const AdminProposals = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,11 +26,7 @@ const AdminProposals = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-60">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    );
+    return <LoadingSpinner/>
   }
 
   if (isError) {
@@ -65,7 +62,7 @@ const AdminProposals = () => {
               {proposals.map((proposal, index) => (
                 <tr
                   key={proposal._id}
-                  className={`shadow-xl bg-gray-100 hover:bg-sky-100 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl ${index % 2 === 0 ? "bg-gray-50/40" : ""
+                  className={`shadow-xl border-b border-gray-300 bg-gray-100 hover:bg-sky-100 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl ${index % 2 === 0 ? "bg-gray-50/40" : ""
                     }`}
                 >
                   {/* Freelancer */}

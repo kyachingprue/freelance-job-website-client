@@ -50,25 +50,25 @@ const AdminPayments = () => {
                 key={payment._id}
                 className=" hover:bg-gray-50 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
-                <td className="px-6 py-3 font-medium">
+                <td className="px-6 py-4 font-medium">
                   {index + 1}
                 </td>
-                <td className="flex py-3 flex-col gap-1">
+                <td className="flex py-4 flex-col gap-1">
                   <p className="text-sm font-bold text-gray-800">Client:
                     <span className="text-sky-900"> {payment.email}</span></p>
                   <p className="text-sm font-bold text-gray-800">Freelancer:
                     <span className="text-sky-900">{payment.freelancerEmail}</span></p>
                 </td>
-                <td className="px-6 py-3 font-semibold text-green-600">
+                <td className="px-6 py-4 font-semibold text-green-600">
                   ${payment.amount}
                 </td>
-                <td className="px-6 py-3 capitalize">
+                <td className="px-6 py-4 capitalize">
                   {payment.paymentMethod}
                 </td>
-                <td className="px-6 py-3 text-xs text-gray-500">
+                <td className="px-6 py-4 text-xs text-gray-500">
                   {payment.transactionId}
                 </td>
-                <td className="px-6 py-3 text-xs text-gray-500">
+                <td className="px-6 py-4 text-xs text-gray-500">
                   {new Date(payment.paidAt).toLocaleString()}
                 </td>
               </tr>
