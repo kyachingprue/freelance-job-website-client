@@ -98,7 +98,7 @@ const AdminUsers = () => {
                   <img
                     src={u.photoURL}
                     alt="profile"
-                    className="w-12 h-12 rounded-full object-cover border"
+                    className="w-12 h-12 rounded-full object-cover border border-sky-500"
                   />
                   <div>
                     <p className="font-semibold">{u.name}</p>

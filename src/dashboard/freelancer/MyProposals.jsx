@@ -89,7 +89,7 @@ const MyProposals = () => {
                 {proposals.map((proposal) => (
                   <tr
                     key={proposal._id}
-                    className="bg-white hover:bg-sky-200 border-b border-gray-300 "
+                    className="bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:bg-sky-200 border-b border-gray-300 "
                   >
                     <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
                       <img

@@ -83,7 +83,7 @@ const AdminJobs = () => {
             {jobs.map((job) => (
               <tr
                 key={job._id}
-                className="border-b border-gray-300 hover:bg-white bg-gray-100 transition"
+                className="border-b border-gray-300 hover:bg-white bg-gray-100 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl"
               >
                 <td className="p-3">
                   <img className="w-8 h-8 md:w-12 md:h-12 rounded-full" src={job.companyLogo} alt={job.title} />

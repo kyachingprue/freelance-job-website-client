@@ -65,7 +65,7 @@ const FreelancerNotifications = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className={`p-5 rounded-2xl shadow-sm border transition-all ${noti.status === "unread"
+                className={`p-5 rounded-2xl hover:-translate-y-1 transition-all duration-300 shadow-sm border hover:shadow-xl ${noti.status === "unread"
                     ? "bg-indigo-50 border-indigo-400"
                     : "bg-white border-gray-200"
                   }`}

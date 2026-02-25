@@ -117,11 +117,11 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   `relative px-4 py-1 font-medium transition-colors duration-300
-     after:absolute after:left-0 after:-bottom-1 after:h-0.5
-     after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
-     after:transition-all after:duration-300
-     hover:text-gray-800 hover:after:w-full
-     ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
+                   after:absolute after:left-0 after:-bottom-1 after:h-0.5
+                   after:w-0 after:bg-linear-to-r after:from-indigo-400 after:to-pink-500
+                   after:transition-all after:duration-300
+                 hover:text-gray-800 hover:after:w-full
+                 ${isActive ? "text-indigo-500 after:w-full" : "text-gray-600"}`
                 }
               >
                 Home
@@ -228,7 +228,7 @@ const Navbar = () => {
               ) : (
                 <div className="relative">
                   <img
-                      src={userData?.photoURL}
+                      src={userData?.photoURL || "https://i.ibb.co.com/9HzyDLhn/470-4703547-icon-user-icon-hd-png-download.jpg"}
                     alt="user"
                     className="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-indigo-500"
                     onClick={() => setOpenMenu(!openMenu)}

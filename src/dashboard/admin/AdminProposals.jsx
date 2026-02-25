@@ -50,7 +50,7 @@ const AdminProposals = () => {
         <div className="overflow-x-auto rounded-xl">
           <table className="min-w-full">
             <thead>
-              <tr className="bg-linear-to-r from-indigo-600 to-blue-600 text-white">
+              <tr className="bg-linear-to-r from-indigo-900 to-blue-950 text-white">
                 <th className="px-4 py-2 text-left">Freelancer</th>
                 <th className="px-4 py-2 text-left">Job Title</th>
                 <th className="px-4 py-3 text-left">Client</th>
@@ -65,7 +65,7 @@ const AdminProposals = () => {
               {proposals.map((proposal, index) => (
                 <tr
                   key={proposal._id}
-                  className={`border-b border-blue-300 bg-gray-100 hover:bg-sky-100 transition duration-200 ${index % 2 === 0 ? "bg-gray-50/40" : ""
+                  className={`shadow-xl bg-gray-100 hover:bg-sky-100 hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl ${index % 2 === 0 ? "bg-gray-50/40" : ""
                     }`}
                 >
                   {/* Freelancer */}
@@ -74,7 +74,7 @@ const AdminProposals = () => {
                       <img
                         src={proposal.freelancerProfile}
                         alt="profile"
-                        className="w-10 h-10 border-blue-400 rounded-full object-cover border"
+                        className="w-12 h-12 border-blue-400 rounded-full object-cover border"
                       />
                       <div>
                         <p className="font-semibold text-gray-700">

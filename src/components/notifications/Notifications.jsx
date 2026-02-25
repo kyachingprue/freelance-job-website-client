@@ -24,22 +24,41 @@ const Notifications = () => {
         <h2 className="text-2xl font-bold mb-6">All Notifications</h2>
 
         <div className="space-y-4">
-          {notifications.map((noti) => (
+          {notifications.length === 0 ? (
             <motion.div
-              key={noti._id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`p-4 hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl shadow-sm ${noti.status === "unread"
-                ? "bg-blue-50 border-l-4 border-blue-500"
-                : "bg-white"
-                }`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center justify-center text-center bg-white shadow-lg rounded-2xl p-12"
             >
-              <p>{noti.message}</p>
-              <p className="text-xs text-gray-400 mt-2">
-                {new Date(noti.createdAt).toLocaleString()}
+              <div className="text-5xl mb-4">🔔</div>
+
+              <h3 className="text-2xl font-extrabold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                No Notifications Yet
+              </h3>
+
+              <p className="text-gray-500 mt-3 max-w-sm">
+                You don’t have any notifications at the moment.
+                Once someone interacts with your work, it will appear here.
               </p>
             </motion.div>
-          ))}
+          ) : (
+            notifications.map((noti) => (
+              <motion.div
+                key={noti._id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`p-4 hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl shadow-sm ${noti.status === "unread"
+                    ? "bg-blue-50 border-l-4 border-blue-500"
+                    : "bg-white"
+                  }`}
+              >
+                <p>{noti.message}</p>
+                <p className="text-xs text-gray-400 mt-2">
+                  {new Date(noti.createdAt).toLocaleString()}
+                </p>
+              </motion.div>
+            ))
+          )}
         </div>
       </div>
    </section>

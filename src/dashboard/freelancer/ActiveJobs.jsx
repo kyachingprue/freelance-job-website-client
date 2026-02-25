@@ -92,6 +92,26 @@ const ActiveJobs = () => {
     return <LoadingSpinner/>
   }
 
+  if (activeJobs.length === 0) {
+    return (
+      <section className="h-full flex items-center justify-center p-6">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center bg-white shadow-xl rounded-2xl p-10 max-w-md"
+        >
+          <Briefcase size={50} className="mx-auto text-indigo-500 mb-4" />
+          <h2 className="text-xl font-bold text-gray-800">
+            No Active Jobs Found
+          </h2>
+          <p className="text-gray-500 mt-2">
+            You don’t have any active jobs at the moment.
+          </p>
+        </motion.div>
+      </section>
+    );
+  }
+
   return (
     <section className="h-full lg:h-160 overflow-y-auto p-4">
       <div>
