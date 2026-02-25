@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { CreditCard, Landmark, Globe } from "lucide-react";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
 
@@ -27,6 +27,49 @@ const CheckoutForm = () => {
       return res.data;
     },
   });
+
+  const handleDelete = (id) => {
+    toast((t) => (
+      <div className="bg-white p-5 rounded-2xl shadow-xl w-72 text-center">
+        <h3 className="text-lg font-semibold mb-3 text-gray-800">
+          Are you sure?
+        </h3>
+
+        <p className="text-sm text-gray-500 mb-4">
+          This payment will be permanently deleted.
+        </p>
+
+        <div className="flex justify-center gap-3">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-300 transition"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={async () => {
+              try {
+                await axiosSecure.delete(`/payments/${id}`);
+                toast.dismiss(t.id);
+                toast.success("Payment deleted successfully ✅");
+
+                // 🔥 Refetch data
+                QueryClient.invalidateQueries(["client-payments", user?.email]);
+              } catch (error) {
+                toast.error("Failed to delete ❌",error?.message);
+              }
+            }}
+            className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
+  console.log(freelancerData?.hireInfo?.freelancerEmail, "Freelancer data");
 
   const bidAmount = freelancerData?.hireInfo?.bidAmount || 0;
   const amountIncents = bidAmount * 100;
@@ -72,6 +115,7 @@ const CheckoutForm = () => {
           hireId,
           amount: bidAmount,
           email: user?.email,
+          freelancerEmail: freelancerData?.hireInfo?.freelancerEmail,
           transactionId: result.paymentIntent.id,
           paymentMethod: result.paymentIntent.payment_method_types[0],
         };
