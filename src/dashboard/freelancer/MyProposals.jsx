@@ -25,7 +25,7 @@ const MyProposals = () => {
 
   return (
     <div>
-      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-2xl h-full lg:h-160 overflow-y-auto p-2">
+      <div className="w-80 md:w-full mx-auto bg-white shadow-lg rounded-2xl h-full lg:h-160 overflow-y-auto md:p-2">
         <h1 className="text-2xl font-bold p-6 border-b border-gray-200">
           My Proposals
         </h1>
@@ -63,7 +63,7 @@ const MyProposals = () => {
         ) : (
           /* ✅ Show Table If Data Exists */
           <div className="overflow-x-auto">
-            <table className="w-full rounded-xl">
+              <table className="min-w-175 md:min-w-full w-full rounded-xl">
               <thead className="bg-gray-600">
                 <tr>
                   {[
@@ -77,7 +77,7 @@ const MyProposals = () => {
                   ].map((header) => (
                     <th
                       key={header}
-                      className="px-6 py-3 text-left text-sm font-medium text-gray-50 uppercase tracking-wider"
+                      className="px-3 md:px-6 py-2 md:py-3 text-left text-xs md:text-sm font-medium text-gray-50 uppercase tracking-wider"
                     >
                       {header}
                     </th>
@@ -91,51 +91,51 @@ const MyProposals = () => {
                     key={proposal._id}
                     className="bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 hover:bg-sky-200 border-b border-gray-300 "
                   >
-                    <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-sm md:text-sm font-medium text-gray-900">
                       <img
                         src={proposal?.companyLogo}
                         alt="Company Logo"
-                        className="w-10 h-10 rounded-full object-cover"
+                        className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
                       />
                     </td>
 
-                    <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-sm md:text-sm font-medium text-gray-900">
                       {proposal.jobTitle}
                     </td>
 
-                    <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-700">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-xs md:text-sm text-gray-700">
                       ${proposal.bidAmount}
                     </td>
 
-                    <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-700">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-xs md:text-sm text-gray-700">
                       {proposal.estimatedTime} days
                     </td>
 
-                    <td className="whitespace-nowrap text-sm font-semibold">
+                    <td className="whitespace-nowrap text-xs md:text-sm font-semibold">
                       {proposal.status === "pending" && (
-                        <span className="flex items-center bg-yellow-600/20 rounded-full py-1.5 px-4 gap-1 text-yellow-800">
+                        <span className="flex items-center bg-yellow-600/20 rounded-full py-1 px-2 md:py-1.5 md:px-4 gap-1 text-yellow-800 text-xs md:text-sm">
                           <XCircle size={16} /> Pending
                         </span>
                       )}
                       {proposal.status === "accepted" && (
-                        <span className="flex items-center bg-green-600/20 rounded-full py-1.5 px-4 gap-1 text-green-600">
+                        <span className="flex items-center bg-yellow-600/20 rounded-full py-1 px-2 md:py-1.5 md:px-4 gap-1 text-yellow-800 text-xs md:text-sm">
                           <CheckCircle size={16} /> Accepted
                         </span>
                       )}
                       {proposal.status === "rejected" && (
-                        <span className="flex items-center bg-red-600/10 rounded-full py-1.5 px-4 gap-1 text-red-600">
+                        <span className="flex items-center bg-red-600/10 rounded-full py-1 px-2 md:py-1.5 md:px-4 gap-1 text-red-600 text-xs md:text-sm">
                           <XCircle size={16} /> Rejected
                         </span>
                       )}
                     </td>
 
-                    <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-xs md:text-sm text-gray-500">
                       {new Date(proposal.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-2 md:px-6 py-1 md:py-2 whitespace-nowrap text-xs md:text-sm text-gray-500">
                       <Link
                         to={`/job-details/${proposal.jobId}`}
-                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline transition duration-200"
+                        className="flex items-center gap-1 md:gap-2 text-blue-600 hover:text-blue-800 hover:underline transition duration-200 text-xs md:text-sm"
                       >
                         <Eye size={18} />
                         View

@@ -79,6 +79,13 @@ const ClientHireFreelancer = () => {
                       <span className="text-sm text-blue-500">{new Date(hire.hiredAt).toLocaleDateString()}</span>
                     </div>
 
+                    <div className="flex flex-row items-center gap-2">
+                      <p className="text-sm font-bold text-gray-500">
+                        BidAmount:
+                      </p>
+                      <span className="text-sm text-blue-500">${hire.bidAmount}</span>
+                    </div>
+
                     {/* Status Badge */}
                     <div className="flex flex-row items-center gap-2">
                       <p className="text-gray-700 text-sm md:text-base font-bold">Status:</p>

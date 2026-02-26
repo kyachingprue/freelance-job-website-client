@@ -96,9 +96,9 @@ const FreelancerProfileSetting = () => {
     setLoading(true);
 
     try {
-      let resumeUrl = resumeURL; // default to current URL
+      let resumeUrl = resumeURL;
 
-      // 1️⃣ Upload resume if user selected a new file
+      // Upload resume if a new file is selected
       if (formData.resume instanceof File) {
         const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
         const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -107,29 +107,31 @@ const FreelancerProfileSetting = () => {
         data.append("file", formData.resume);
         data.append("upload_preset", uploadPreset);
 
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-          method: "POST",
-          body: data,
-        });
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
+          { method: "POST", body: data }
+        );
 
         if (!res.ok) throw new Error("Resume upload failed");
 
         const resData = await res.json();
-        resumeUrl = resData.secure_url; // actual URL to save in MongoDB
+        resumeUrl = resData.secure_url;
         setResumeURL(resumeUrl);
       }
 
-      // 2️⃣ Prepare the data to update
+      // Prepare updated data
       const updatedData = {
         title: formData.title,
-        skills: formData.skills.split(",").map((s) => s.trim()).filter(Boolean),
+        skills: formData.skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
         github: formData.github,
         linkedin: formData.linkedin,
         description: formData.description,
-        resume: resumeUrl, // save URL, not File object
+        resume: resumeUrl,
       };
 
-      // 3️⃣ Update MongoDB
       await axiosSecure.patch(`/users/${dbUser._id}`, updatedData);
 
       toast.success("Profile updated successfully 🚀");
@@ -149,21 +151,26 @@ const FreelancerProfileSetting = () => {
 
     if (dbUser?.roleRequestSent) return toast.error("You already sent a request!");
 
+    if (!dbUser?.photoURL) {
+      return toast.error("Please upload your profile image before requesting access.");
+    }
+
     setRequestLoading(true);
 
     try {
-      // POST role request
+      // 1️⃣ Save role request
       await axiosSecure.post("/role-request", {
         userId: dbUser._id.toString(),
         userEmail: firebaseUser?.email,
-        userProfile: dbUser?.photoURL || "",
+        userProfile: dbUser.photoURL, // ensure it exists
         currentRole: dbUser.role,
         requestRole: "client",
       });
 
-      // PATCH user roleRequestSent flag
+      // 2️⃣ Patch user roleRequestSent flag
       await axiosSecure.patch(`/users/${dbUser._id.toString()}`, {
         roleRequestSent: true,
+        photoURL: dbUser.photoURL, // optional but ensures saved
       });
 
       toast.success("Request sent successfully!");
@@ -179,60 +186,6 @@ const FreelancerProfileSetting = () => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-
-  const handleResumeUpload = async (e) => {
-    e.preventDefault();
-    if (!dbUser?._id) return;
-
-    setLoading(true);
-
-    try {
-      let resumeUrl = resumeURL; // keep existing URL if no new file
-
-      // Upload resume only if user selected a new file
-      if (formData.resume instanceof File) {
-        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-        const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-
-        const data = new FormData();
-        data.append("file", formData.resume);
-        data.append("upload_preset", uploadPreset);
-
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-          method: "POST",
-          body: data,
-        });
-
-        if (!res.ok) throw new Error("Resume upload failed");
-
-        const resData = await res.json();
-        resumeUrl = resData.secure_url; // update URL to save in DB
-        setResumeURL(resumeUrl);
-      }
-
-      // Prepare updated user data
-      const updatedData = {
-        title: formData.title,
-        skills: formData.skills.split(",").map((s) => s.trim()).filter(Boolean),
-        github: formData.github,
-        linkedin: formData.linkedin,
-        description: formData.description,
-        resume: resumeUrl, // save the uploaded resume URL
-      };
-
-      // PATCH request to update user profile
-      await axiosSecure.patch(`/users/${dbUser._id}`, updatedData);
-
-      toast.success("Profile updated successfully 🚀");
-      setShowForm(false);
-      refetch();
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || err.message || "Update failed");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <LoadingSpinner/>
@@ -346,21 +299,13 @@ const FreelancerProfileSetting = () => {
                 className="flex items-center max-w-6/12 justify-between bg-lime-200 hover:bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 mt-2 transition shadow-sm group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="bg-red-300 text-red-600 p-2 rounded-lg">
-                    📄
-                  </div>
+                  <div className="bg-red-300 text-red-600 p-2 rounded-lg">📄</div>
                   <div>
                     <p className="font-medium text-gray-800 group-hover:text-blue-600 transition">
                       {resumeURL.split("/").pop()}
                     </p>
-                    <p className="text-xs text-gray-500">
-                      Click to view or download
-                    </p>
+                    <p className="text-xs text-gray-500">Click to view or download</p>
                   </div>
-                </div>
-
-                <div className="text-blue-500 font-semibold text-sm">
-                  Open
                 </div>
               </a>
             ) : (
@@ -431,18 +376,15 @@ const FreelancerProfileSetting = () => {
                   className="border border-gray-400 px-2 py-2 h-20 rounded w-full"
                 />
                 {/* Resume upload */}
-                <div>
-                  <label className="block mb-1">Upload Resume (PDF)</label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) handleResumeUpload(file); // call the function
-                    }}
-                    className="border border-gray-400 px-2 py-1.5 rounded w-full"
-                  />
-                </div>
+                <input
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) setFormData({ ...formData, resume: file }); // save file to formData
+                  }}
+                  className="border border-gray-400 px-2 py-1.5 rounded w-full"
+                />
 
                 <div className="flex justify-end gap-2 mt-2">
                   <button

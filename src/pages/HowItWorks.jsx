@@ -1,4 +1,6 @@
 import { motion } from "motion/react";
+import LoginCards from "../components/LoginCards";
+import { Key } from "lucide-react";
 
 const freelancerSteps = [
   {
@@ -90,6 +92,18 @@ const HowItWorks = () => {
         >
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate odit quas iure! Fugit assumenda, aspernatur, quasi praesentium dignissimos suscipit officiis accusamus placeat molestiae, quae illo culpa sint excepturi non nesciunt?
         </motion.p>
+
+        <div className="mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
+            className="text-3xl pl-5 font-extrabold bg-clip-text text-transparent bg-linear-to-r from-indigo-800 via-purple-900 to-pink-900 flex items-center gap-3"
+          >
+            <Key size={28} color="red"/> Secure Login Portal
+          </motion.div>
+          <LoginCards />
+        </div>
 
         {/* Freelancer Section */}
         <motion.div

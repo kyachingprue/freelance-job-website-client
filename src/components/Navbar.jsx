@@ -284,12 +284,17 @@ const Navbar = () => {
                 </div>
               )}
 
-              <img
-                src={user?.photoURL || "https://i.ibb.co/ZYW3VTp/user.png"}
+              {user ? (<img
+                src={userData?.photoURL || "https://i.ibb.co/ZYW3VTp/user.png"}
                 alt="user"
-                className="w-8 h-8 rounded-full cursor-pointer border-2 border-indigo-500"
+                className="w-8 h-8 rounded-full object-cover cursor-pointer border-2 border-indigo-500"
                 onClick={() => setOpenMenu(!openMenu)}
-              />
+              />) : (<Link
+                to="/login"
+                className="px-4 py-1 rounded-full text-sm md:text-base bg-indigo-600 text-white hover:bg-indigo-700 transition shadow-md"
+              >
+                Login
+              </Link>) }
 
               <button
                 onClick={() => setMobileMenu(!mobileMenu)}

@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Bell, CheckCircle, Circle } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const FreelancerNotifications = () => {
   const { user } = useAuth();
@@ -24,11 +25,7 @@ const FreelancerNotifications = () => {
   });
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <span className="loading loading-spinner text-indigo-600"></span>
-      </div>
-    );
+    return <LoadingSpinner/>
   }
 
   if (isError) {
