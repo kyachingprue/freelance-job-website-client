@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
+import RouteMetadata from "../components/RouteMetadata";
 
 const ErrorPage = () => {
   return (
+    <>
+    <RouteMetadata />
     <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-gray-900 via-indigo-950 to-black px-4">
       {/* Animated Error Illustration */}
       <motion.div
@@ -58,6 +61,7 @@ const ErrorPage = () => {
         </motion.div>
       </motion.div>
     </div>
+    </>
   );
 };
 

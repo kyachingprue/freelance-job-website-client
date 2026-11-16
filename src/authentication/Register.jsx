@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import GoogleLogin from "./GoogleLogin";
+import RouteMetadata from "../components/RouteMetadata";
 
 const Register = () => {
   const { registerUser, profileUpdate } = useAuth();
@@ -75,6 +76,8 @@ const Register = () => {
   };
 
   return (
+    <>
+    <RouteMetadata />
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-gray-900 via-indigo-950 to-black px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -226,6 +229,7 @@ const Register = () => {
         </p>
       </motion.div>
     </div>
+    </>
   );
 };
 

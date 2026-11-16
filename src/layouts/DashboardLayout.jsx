@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import useRole from "../hooks/useRole";
 import DashboardLoading from "../components/DashboardLoading";
+import RouteMetadata from "../components/RouteMetadata";
 
 export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -72,6 +73,7 @@ export default function DashboardLayout() {
 
   return (
     <div>
+      <RouteMetadata />
       <div className="flex min-h-screen transition-all">
 
         {/* Overlay (Mobile only) */}
